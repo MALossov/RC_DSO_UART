@@ -56,6 +56,7 @@
 uint16_t DAC_values[100] = { 2010,2136,2261,2386,2509,2631,2749,2865,2978,3087,3191,3291,3385,3475,3558,3636,3707,3771,3828,3878,3921,3956,3984,4004,4016,4019,4016,4004,3984,3956,3921,3878,3828,3771,3707,3636,3558,3475,3385,3291,3191,3087,2978,2865,2749,2631,2509,2386,2261,2136,2010,1883,1758,1633,1510,1388,1270,1154,1041,932,828,728,634,544,461,383,312,248,191,141,98,63,35,15,3,0,3,15,35,63,98,141,191,248,312,383,461,544,634,728,828,932,1041,1154,1270,1388,1510,1633,1758,1883 };
 uint32_t ADC_Values[1024];//储存ADC数据
 uint8_t aRxBuffer[2];
+uint8_t uartWavStr[10000];
 //short save_statue = 0;
 
 /* USER CODE END PV */
@@ -135,6 +136,10 @@ int main(void)
   HAL_Delay(1000);
   OLED_Clear();
   HAL_Delay(1000);
+  sprintf(uartWavStr, "addt 1,0,325\xff\xff\xff");
+  for (int i = 0;i < 330;i++)
+    strcat(uartWavStr, "\xfe");
+  strcat(uartWavStr, "\xff\xff\xff");
   OLED_ShowString(0, 0, "PrePare2ShowF&Vpp", 16);
   //HAL_ADC_Start_IT(&hadc1);
 
@@ -144,7 +149,7 @@ int main(void)
   HAL_TIM_Base_Start(&htim3);//ADC开始计时
   HAL_ADC_Start_DMA(&hadc1, ADC_Values, 1024);
 
-  uint8_t text[20];
+
   unsigned long int num = 0;
   /* USER CODE END 2 */
 

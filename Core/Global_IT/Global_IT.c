@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:52
- * @LastEditTime: 2022-04-01 19:40:33
+ * @LastEditTime: 2022-04-01 20:00:19
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -14,8 +14,7 @@ uint32_t FFT_out_mag[512]; // fft振幅
 uint8_t str[40] = "55";
 uint32_t sampling_rate_list[3] = { 1000, 5000, 10000 };
 uint16_t tim3period[3] = { 999, 199, 99 };
-uint8_t endChar[3] = { 0xff,0xff,0xff };
-uint8_t uartWavStr[10000] = "addt 1,0,1024";
+extern uint8_t uartWavStr[10000];
 uint8_t tmpWavPnt[20];
 
 short save_statue = 0;
@@ -50,8 +49,11 @@ void dsp_asm_powerMag(int32_t* IBUFOUT) //求谐波幅值
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
     HAL_GPIO_TogglePin(LED0_GPIO_Port, LED0_Pin);
-
     HAL_ADC_Stop_DMA(&hadc1); //关闭adc
+
+    HAL_UART_Transmit(&huart1, uartWavStr, strlen(uartWavStr), 1000);
+
+
     static uint8_t choice = 2, times = 0;
     static uint32_t sampling_rate = 10000;
     uint32_t max_f = 0, max_mag = 0, min_mag = 0; //最大振幅和相应频率和最小振幅
@@ -132,7 +134,10 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     // strcat(uartWavStr, tmpWavPnt);
     // HAL_UART_Transmit_DMA(&huart1, uartWavStr, strlen(uartWavStr));
 
-    sprintf(uartWavStr, "add 1,0,320%s", endChar);
+    // sprintf(uartWavStr, "add 1,0,320%s", endChar);
+    //while (huart1.gState != HAL_UART_STATE_READY);
+    for (int i = 0;i < 320;i++)
+        printf("add 1,0,%d\xff\xff\xff", (uint8_t)(ADC_Values[i] >> 5));
 
     HAL_ADC_Start_DMA(&hadc1, ADC_Values, 1024); //开启adc
 }
