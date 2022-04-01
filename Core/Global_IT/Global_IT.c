@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:52
- * @LastEditTime: 2022-04-01 20:00:19
+ * @LastEditTime: 2022-04-01 20:59:00
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -15,6 +15,9 @@ uint8_t str[40] = "55";
 uint32_t sampling_rate_list[3] = { 1000, 5000, 10000 };
 uint16_t tim3period[3] = { 999, 199, 99 };
 extern uint8_t uartWavStr[10000];
+uint8_t endChar[3] = { 0xff,0xff,0xff };
+uint8_t uartWavCache[500];
+uint8_t uartWavCacheStr[800] = "addt 1,0,320\xff\xff\xff";
 uint8_t tmpWavPnt[20];
 
 short save_statue = 0;
@@ -51,7 +54,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     HAL_GPIO_TogglePin(LED0_GPIO_Port, LED0_Pin);
     HAL_ADC_Stop_DMA(&hadc1); //关闭adc
 
-    HAL_UART_Transmit(&huart1, uartWavStr, strlen(uartWavStr), 1000);
+    //HAL_UART_Transmit(&huart1, uartWavStr, strlen(uartWavStr), 1000);
 
 
     static uint8_t choice = 2, times = 0;
@@ -125,19 +128,14 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     /****************************************************************/
 
 
-   // 进行一波串口的DMA转换和发送
-    // strcat(uartWavStr, endChar);
-    // for (int i = 0;i < 320;i++) {
-    //     sprintf(uartWavStr, "%s%x", uartWavStr, (uint8_t)(ADC_Values[i] >> 5));
-    // }
-    // sprintf(tmpWavPnt, "%x%s", (uint8_t)(ADC_Values[320] >> 5), endChar);
-    // strcat(uartWavStr, tmpWavPnt);
-    // HAL_UART_Transmit_DMA(&huart1, uartWavStr, strlen(uartWavStr));
+   //进行一波串口的DMA转换和发送
+    for (int i = 0;i < 330;i++)
+        uartWavCache[i] = (uint8_t)(ADC_Values[i] >> 5);
 
-    // sprintf(uartWavStr, "add 1,0,320%s", endChar);
-    //while (huart1.gState != HAL_UART_STATE_READY);
-    for (int i = 0;i < 320;i++)
-        printf("add 1,0,%d\xff\xff\xff", (uint8_t)(ADC_Values[i] >> 5));
+    HAL_UART_Transmit(&huart1, "addt 1,0,325\xff\xff\xff", 15, 50);
+    HAL_UART_Transmit(&huart1, uartWavCache, 330, 100);
+    HAL_UART_Transmit(&huart1, "\xff\xff\xff", 3, 10);
+
 
     HAL_ADC_Start_DMA(&hadc1, ADC_Values, 1024); //开启adc
 }

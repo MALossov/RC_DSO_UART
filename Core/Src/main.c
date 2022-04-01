@@ -137,9 +137,9 @@ int main(void)
   OLED_Clear();
   HAL_Delay(1000);
   sprintf(uartWavStr, "addt 1,0,325\xff\xff\xff");
-  for (int i = 0;i < 330;i++)
-    strcat(uartWavStr, "\xfe");
-  strcat(uartWavStr, "\xff\xff\xff");
+   for (int i = 0;i < 330;i++)
+     strcat(uartWavStr, "\xfe");
+   strcat(uartWavStr, "\xff\xff\xff");
   OLED_ShowString(0, 0, "PrePare2ShowF&Vpp", 16);
   //HAL_ADC_Start_IT(&hadc1);
 
