@@ -95,21 +95,21 @@
         {
             "name": "103RC_DSO",
             "includePath": [
-                "e:\\STM\\SicenceAssociation\\RC_DSO_UART\\Core\\Inc",
-                "e:\\STM\\SicenceAssociation\\RC_DSO_UART\\Drivers\\STM32F1xx_HAL_Driver\\Inc",
-                "e:\\STM\\SicenceAssociation\\RC_DSO_UART\\Drivers\\STM32F1xx_HAL_Driver\\Inc\\Legacy",
-                "e:\\STM\\SicenceAssociation\\RC_DSO_UART\\Drivers\\CMSIS\\Device\\ST\\STM32F1xx\\Include",
-                "e:\\STM\\SicenceAssociation\\RC_DSO_UART\\Drivers\\CMSIS\\Include",
-                "e:\\STM\\SicenceAssociation\\RC_DSO_UART\\Core\\Global_IT",
-                "e:\\STM\\SicenceAssociation\\RC_DSO_UART\\Core\\OLED_IIC",
-                "e:\\STM\\SicenceAssociation\\RC_DSO_UART\\Core\\DSP",
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Core\\Inc",
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Drivers\\STM32F1xx_HAL_Driver\\Inc",
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Drivers\\STM32F1xx_HAL_Driver\\Inc\\Legacy",
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Drivers\\CMSIS\\Device\\ST\\STM32F1xx\\Include",
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Drivers\\CMSIS\\Include",
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Core\\Global_IT",
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Core\\OLED_IIC",
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Core\\DSP",
                 "D:\\Program\\Keil\\ARM\\ARMCLANG\\include",
                 "D:\\Program\\Keil\\ARM\\ARMCLANG\\include\\arm_linux",
                 "D:\\Program\\Keil\\ARM\\ARMCLANG\\include\\arm_linux_compat",
                 "D:\\Program\\Keil\\ARM\\ARMCLANG\\include\\libcxx",
-                "e:\\STM\\SicenceAssociation\\RC_DSO_UART\\MDK-ARM",
-                "e:\\STM\\SicenceAssociation\\RC_DSO_UART\\Core\\Src",
-                "e:\\STM\\SicenceAssociation\\RC_DSO_UART\\Drivers\\STM32F1xx_HAL_Driver\\Src"
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\MDK-ARM",
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Core\\Src",
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Drivers\\STM32F1xx_HAL_Driver\\Src"
             ],
             "defines": [
                 "USE_HAL_DRIVER",

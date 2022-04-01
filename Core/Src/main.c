@@ -131,7 +131,7 @@ int main(void)
 
   OLED_Clear();
   OLED_ShowString(0, 0, "OLED_Inited", 16);
-  printf("HelloWorld!");
+  //printf("HelloWorld!\xff\xff\xff");
   HAL_Delay(1000);
   OLED_Clear();
   HAL_Delay(1000);
