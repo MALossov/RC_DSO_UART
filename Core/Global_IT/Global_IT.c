@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:52
- * @LastEditTime: 2022-04-01 17:37:09
+ * @LastEditTime: 2022-04-01 19:40:33
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -14,7 +14,8 @@ uint32_t FFT_out_mag[512]; // fft振幅
 uint8_t str[40] = "55";
 uint32_t sampling_rate_list[3] = { 1000, 5000, 10000 };
 uint16_t tim3period[3] = { 999, 199, 99 };
-uint8_t uartWavStr[10000] = "addt 1,0,1024\xff\xff\xff";
+uint8_t endChar[3] = { 0xff,0xff,0xff };
+uint8_t uartWavStr[10000] = "addt 1,0,1024";
 uint8_t tmpWavPnt[20];
 
 short save_statue = 0;
@@ -95,7 +96,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     /********************************输出**(vpp峰峰值，max_f_r频率，duty_cycle占空比)(ADCvalues:ADC采样值)***********************/
     OLED_Clear();
     sprintf(str, "Vpp=%.2fV,f=%.1fHZ,d:%.1f%%", vpp, max_f_r, duty_cycle); //实际电压和频率
-    printf("%s", str);
+    //printf("%s", str);
     OLED_ShowString(0, 0, str, 16);
     /******************************调档*****************************/
     if (max_f_r > 700)
@@ -123,14 +124,15 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 
 
    // 进行一波串口的DMA转换和发送
-    for (int i = 0;i < 1023;i++) {
-        sprintf(uartWavStr, "%s%d,", uartWavStr, (uint8_t)(ADC_Values[i] >> 5));
-    }
-    sprintf(tmpWavPnt, "%d\xff\xff\xff", (uint8_t)(ADC_Values[1023] >> 5));
-    strcat(uartWavStr, tmpWavPnt);
-    HAL_UART_Transmit_DMA(&huart1, uartWavStr, strlen(uartWavStr));
+    // strcat(uartWavStr, endChar);
+    // for (int i = 0;i < 320;i++) {
+    //     sprintf(uartWavStr, "%s%x", uartWavStr, (uint8_t)(ADC_Values[i] >> 5));
+    // }
+    // sprintf(tmpWavPnt, "%x%s", (uint8_t)(ADC_Values[320] >> 5), endChar);
+    // strcat(uartWavStr, tmpWavPnt);
+    // HAL_UART_Transmit_DMA(&huart1, uartWavStr, strlen(uartWavStr));
 
-    sprintf(uartWavStr, "addt 1,0,1024\xff\xff\xff");
+    sprintf(uartWavStr, "add 1,0,320%s", endChar);
 
     HAL_ADC_Start_DMA(&hadc1, ADC_Values, 1024); //开启adc
 }
