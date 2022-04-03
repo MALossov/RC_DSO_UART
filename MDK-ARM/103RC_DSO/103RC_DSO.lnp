@@ -1,5 +1,6 @@
 --cpu Cortex-M3
 "103rc_dso\startup_stm32f103xe.o"
+"103rc_dso\usart_it.o"
 "103rc_dso\global_it.o"
 "103rc_dso\oled.o"
 "103rc_dso\cr4_fft_1024_stm32.o"

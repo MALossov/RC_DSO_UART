@@ -16,8 +16,8 @@
   *
   ******************************************************************************
   */
-  /* USER CODE END Header */
-  /* Includes ------------------------------------------------------------------*/
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
 #include "dac.h"
@@ -33,6 +33,7 @@
 #include "Global_IT.h"
 #include "oled.h"
 #include "stm32_dsp.h"
+#include "USART_IT.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,8 +56,14 @@
 /* USER CODE BEGIN PV */
 uint16_t DAC_values[100] = { 2010,2136,2261,2386,2509,2631,2749,2865,2978,3087,3191,3291,3385,3475,3558,3636,3707,3771,3828,3878,3921,3956,3984,4004,4016,4019,4016,4004,3984,3956,3921,3878,3828,3771,3707,3636,3558,3475,3385,3291,3191,3087,2978,2865,2749,2631,2509,2386,2261,2136,2010,1883,1758,1633,1510,1388,1270,1154,1041,932,828,728,634,544,461,383,312,248,191,141,98,63,35,15,3,0,3,15,35,63,98,141,191,248,312,383,461,544,634,728,828,932,1041,1154,1270,1388,1510,1633,1758,1883 };
 uint32_t ADC_Values[1024];//储存ADC数据
+
 uint8_t aRxBuffer[2];
 uint8_t uartWavStr[10000];
+uint8_t* rxPtr;
+uint8_t rxFlg;
+uint8_t rxStr[200];
+uint8_t sendFlag;
+extern uint8_t stopADC;
 //short save_statue = 0;
 
 /* USER CODE END PV */
@@ -131,19 +138,17 @@ int main(void)
   OLED_Init();
 
   OLED_Clear();
-  OLED_ShowString(0, 0, "OLED_Inited", 16);
+  rxPtr = rxStr;
   //printf("HelloWorld!\xff\xff\xff");
-  HAL_Delay(1000);
-  OLED_Clear();
-  HAL_Delay(1000);
   sprintf(uartWavStr, "addt 1,0,325\xff\xff\xff");
-   for (int i = 0;i < 330;i++)
-     strcat(uartWavStr, "\xfe");
-   strcat(uartWavStr, "\xff\xff\xff");
+  for (int i = 0;i < 330;i++)
+    strcat(uartWavStr, "\xfe");
+  strcat(uartWavStr, "\xff\xff\xff");
   OLED_ShowString(0, 0, "PrePare2ShowF&Vpp", 16);
   //HAL_ADC_Start_IT(&hadc1);
 
-  HAL_UART_Receive_IT(&huart1, &aRxBuffer, 1);
+  HAL_UART_Receive_IT(&huart1, aRxBuffer, 1);
+
   HAL_TIM_Base_Start(&htim2);//DAC计时
   HAL_DAC_Start_DMA(&hdac, DAC1_CHANNEL_1, (uint32_t*)DAC_values, 100, DAC_ALIGN_12B_R);
   HAL_TIM_Base_Start(&htim3);//ADC开始计时
@@ -160,6 +165,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+//		if(stopADC){
+//    HAL_UART_Receive_IT(&huart1, aRxBuffer, 1);
+//		}
     /*if (save_statue == 1)
     {
       for (short i = 0;i < 500;i++)
@@ -192,9 +200,9 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
-  RCC_PeriphCLKInitTypeDef PeriphClkInit = { 0 };
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -213,8 +221,8 @@ void SystemClock_Config(void)
 
   /** Initializes the CPU, AHB and APB buses clocks
   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
-    | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -256,11 +264,11 @@ void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t* file, uint32_t line)
+void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-     /* USER CODE END 6 */
+  /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

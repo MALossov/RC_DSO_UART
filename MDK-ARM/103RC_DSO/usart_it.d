@@ -1,4 +1,6 @@
-103rc_dso/main.o: ..\Core\Src\main.c ..\Core\Inc\main.h \
+103rc_dso/usart_it.o: ..\Core\USART_IT\USART_IT.c \
+  ..\Core\USART_IT\USART_IT.h ..\Core\Inc\stm32f1xx_it.h \
+  ..\Core\Inc\adc.h ..\Core\Inc\main.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h \
   ..\Core\Inc\stm32f1xx_hal_conf.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h \
@@ -33,14 +35,7 @@
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim_ex.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h \
-  ..\Core\Inc\adc.h ..\Core\Inc\main.h ..\Core\Inc\dac.h \
-  ..\Core\Inc\dma.h ..\Core\Inc\i2c.h ..\Core\Inc\tim.h \
-  ..\Core\Inc\usart.h ..\Core\Inc\gpio.h \
-  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h \
-  ..\Core\Global_IT\Global_IT.h ..\Core\Inc\stm32f1xx_it.h \
-  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdio.h \
-  ..\Core\OLED_IIC\oled.h \
-  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  ..\Core\DSP\stm32_dsp.h \
-  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\math.h \
-  ..\Core\USART_IT\USART_IT.h
+  ..\Core\Inc\dac.h D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  ..\Core\Inc\usart.h ..\Core\OLED_IIC\oled.h ..\Core\Inc\main.h \
+  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdlib.h ..\Core\Inc\tim.h \
+  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h ..\Core\Inc\dma.h

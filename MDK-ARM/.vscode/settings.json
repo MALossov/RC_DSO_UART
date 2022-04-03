@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "usart_it.h": "c"
+    }
+}

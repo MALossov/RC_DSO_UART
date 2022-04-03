@@ -103,6 +103,7 @@
                 "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Core\\Global_IT",
                 "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Core\\OLED_IIC",
                 "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Core\\DSP",
+                "e:\\STM\\SicenceAssociation\\TryUp4DSO\\RC_DSO_UART\\Core\\USART_IT",
                 "D:\\Program\\Keil\\ARM\\ARMCLANG\\include",
                 "D:\\Program\\Keil\\ARM\\ARMCLANG\\include\\arm_linux",
                 "D:\\Program\\Keil\\ARM\\ARMCLANG\\include\\arm_linux_compat",

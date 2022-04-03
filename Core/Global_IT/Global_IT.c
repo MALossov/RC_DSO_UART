@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:52
- * @LastEditTime: 2022-04-01 20:59:00
+ * @LastEditTime: 2022-04-03 15:49:08
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -48,6 +48,10 @@ void dsp_asm_powerMag(int32_t* IBUFOUT) //求谐波幅值
                                          //之所以先除以32768后乘以65536是为了符合浮点数的计算规律
     FFT_out_mag[0] = FFT_out_mag[0] / 2; //这个是直流分量，不需要乘以2
 }
+
+
+
+
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
@@ -99,7 +103,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     /*************************计算实际频率*******************************/
     max_f_r = (float)max_f * sampling_rate / 1024; //计算实际频率
     /********************************输出**(vpp峰峰值，max_f_r频率，duty_cycle占空比)(ADCvalues:ADC采样值)***********************/
-    OLED_Clear();
+    //OLED_Clear();
     sprintf(str, "Vpp=%.2fV,f=%.1fHZ,d:%.1f%%", vpp, max_f_r, duty_cycle); //实际电压和频率
     //printf("%s", str);
     OLED_ShowString(0, 0, str, 16);
@@ -140,13 +144,3 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     HAL_ADC_Start_DMA(&hadc1, ADC_Values, 1024); //开启adc
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
-{
-    if (huart->Instance == &huart1)
-    {
-        printf("%c", aRxBuffer[0]);
-
-        HAL_UART_Receive_IT(&huart1, &aRxBuffer, 1);
-    }
-
-}
