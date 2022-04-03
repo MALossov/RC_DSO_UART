@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:52
- * @LastEditTime: 2022-04-03 15:49:08
+ * @LastEditTime: 2022-04-03 21:26:15
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -19,6 +19,9 @@ uint8_t endChar[3] = { 0xff,0xff,0xff };
 uint8_t uartWavCache[500];
 uint8_t uartWavCacheStr[800] = "addt 1,0,320\xff\xff\xff";
 uint8_t tmpWavPnt[20];
+uint8_t showFlag;
+
+extern DataCTL uiDtc;
 
 short save_statue = 0;
 
@@ -58,7 +61,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     HAL_GPIO_TogglePin(LED0_GPIO_Port, LED0_Pin);
     HAL_ADC_Stop_DMA(&hadc1); //关闭adc
 
-    //HAL_UART_Transmit(&huart1, uartWavStr, strlen(uartWavStr), 1000);
+
 
 
     static uint8_t choice = 2, times = 0;
@@ -103,42 +106,44 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     /*************************计算实际频率*******************************/
     max_f_r = (float)max_f * sampling_rate / 1024; //计算实际频率
     /********************************输出**(vpp峰峰值，max_f_r频率，duty_cycle占空比)(ADCvalues:ADC采样值)***********************/
-    //OLED_Clear();
-    sprintf(str, "Vpp=%.2fV,f=%.1fHZ,d:%.1f%%", vpp, max_f_r, duty_cycle); //实际电压和频率
-    //printf("%s", str);
-    OLED_ShowString(0, 0, str, 16);
-    /******************************调档*****************************/
-    if (max_f_r > 700)
-        choice = 2;
-    else if (max_f_r > 200)
-        choice = 1;
-    else
-        choice = 0; //分档
-    if (times < 10)
-    {
-        if (times == 8)
+
+        /******************************调档*****************************/
+    if (uiDtc.dw == AUTO) {
+        if (max_f_r > 700)
+            choice = 2;
+        else if (max_f_r > 200)
+            choice = 1;
+        else
+            choice = 0; //分档
+        if (times < 10)
         {
-            sampling_rate = 10000;
-            htim3.Instance->ARR = 99;
-        } //改档前，先使用10k采两次，防止采样率从低到高引发问题
-        times++;
+            if (times == 8)
+            {
+                sampling_rate = 10000;
+                htim3.Instance->ARR = 99;
+                showFlag = 0;
+            } //改档前，先使用10k采两次，防止采样率从低到高引发问题
+            times++;
+        }
+        else
+        {
+            times = 0;
+            sampling_rate = sampling_rate_list[choice];
+            htim3.Instance->ARR = tim3period[choice];
+            showFlag = 1;
+        } //改档
     }
-    else
-    {
-        times = 0;
-        sampling_rate = sampling_rate_list[choice];
-        htim3.Instance->ARR = tim3period[choice];
-    } //改档
     /****************************************************************/
 
 
    //进行一波串口的DMA转换和发送
-    for (int i = 0;i < 330;i++)
-        uartWavCache[i] = (uint8_t)(ADC_Values[i] >> 5);
 
-    HAL_UART_Transmit(&huart1, "addt 1,0,325\xff\xff\xff", 15, 50);
-    HAL_UART_Transmit(&huart1, uartWavCache, 330, 100);
-    HAL_UART_Transmit(&huart1, "\xff\xff\xff", 3, 10);
+    if (showFlag) {
+        sprintf(str, "Vpp=%.2fV,f=%.1fHZ,d:%.1f%%", vpp, max_f_r, duty_cycle); //实际电压和频率
+        OLED_ShowString(0, 0, str, 16);
+    }
+
+
 
 
     HAL_ADC_Start_DMA(&hadc1, ADC_Values, 1024); //开启adc

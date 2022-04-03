@@ -1,2 +1,151 @@
-Load "103RC_DSO\\103RC_DSO.axf" 
-Full Chip Erase Done.Programming Done.Verify OK.Flash Load finished at 15:12:37
+*** Using Compiler 'V6.16', folder: 'D:\Program\Keil\ARM\ARMCLANG\Bin'
+Rebuild target '103RC_DSO'
+assembling startup_stm32f103xe.s...
+assembling cr4_fft_1024_stm32.s...
+../Core/USART_IT/USART_IT.c(1): warning: In file included from...../Core/USART_IT/USART_IT.h(31): error: redefinition of enumerator 'NUL'
+    NUL,
+    ^
+../Core/USART_IT/USART_IT.h(24): note: previous definition is here
+    NUL,
+    ^
+../Core/USART_IT/USART_IT.h(40): error: redefinition of enumerator 'NUL'
+    NUL,
+    ^
+../Core/USART_IT/USART_IT.h(24): note: previous definition is here
+    NUL,
+    ^
+../Core/USART_IT/USART_IT.h(47): error: redefinition of enumerator 'NUL'
+    NUL,
+    ^
+../Core/USART_IT/USART_IT.h(24): note: previous definition is here
+    NUL,
+    ^
+../Core/USART_IT/USART_IT.h(50): error: redefinition of 'LX' as different kind of symbol
+}LX;
+ ^
+../Core/USART_IT/USART_IT.h(42): note: previous definition is here
+    LX, //连续
+    ^
+../Core/USART_IT/USART_IT.h(55): error: unknown type name 'LX'
+    LX lx;  //理想波形的控制面板
+    ^
+../Core/USART_IT/USART_IT.h(71): error: variable has incomplete type 'void'
+void Init_DataCTL;
+     ^
+6 errors generated.
+compiling USART_IT.c...
+../Core/Src/main.c(36): warning: In file included from...../Core/USART_IT\USART_IT.h(31): error: redefinition of enumerator 'NUL'
+    NUL,
+    ^
+../Core/USART_IT\USART_IT.h(24): note: previous definition is here
+    NUL,
+    ^
+../Core/USART_IT\USART_IT.h(40): error: redefinition of enumerator 'NUL'
+    NUL,
+    ^
+../Core/USART_IT\USART_IT.h(24): note: previous definition is here
+    NUL,
+    ^
+../Core/USART_IT\USART_IT.h(47): error: redefinition of enumerator 'NUL'
+    NUL,
+    ^
+../Core/USART_IT\USART_IT.h(24): note: previous definition is here
+    NUL,
+    ^
+../Core/USART_IT\USART_IT.h(50): error: redefinition of 'LX' as different kind of symbol
+}LX;
+ ^
+../Core/USART_IT\USART_IT.h(42): note: previous definition is here
+    LX, //连续
+    ^
+../Core/USART_IT\USART_IT.h(55): error: unknown type name 'LX'
+    LX lx;  //理想波形的控制面板
+    ^
+../Core/USART_IT\USART_IT.h(71): error: variable has incomplete type 'void'
+void Init_DataCTL;
+     ^
+../Core/Src/main.c(143): warning: passing 'uint8_t [10000]' to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  sprintf(uartWavStr, "addt 1,0,325\xff\xff\xff");
+          ^~~~~~~~~~
+D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdio.h(417): note: passing argument to parameter here
+extern _ARMABI int sprintf(char * __restrict /*s*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(1,2)));
+                                                  ^
+../Core/Src/main.c(145): warning: passing 'uint8_t [10000]' to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+    strcat(uartWavStr, "\xfe");
+           ^~~~~~~~~~
+D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h(93): note: passing argument to parameter here
+extern _ARMABI char *strcat(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(1,2)));
+                                                    ^
+../Core/Src/main.c(146): warning: passing 'uint8_t [10000]' to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  strcat(uartWavStr, "\xff\xff\xff");
+         ^~~~~~~~~~
+D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h(93): note: passing argument to parameter here
+extern _ARMABI char *strcat(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(1,2)));
+                                                    ^
+../Core/Src/main.c(148): warning: passing 'char [18]' to parameter of type 'u8 *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+  OLED_ShowString(0, 0, "PrePare2ShowF&Vpp", 16);
+                        ^~~~~~~~~~~~~~~~~~~
+../Core/OLED_IIC\oled.h(43): note: passing argument to parameter 'p' here
+void OLED_ShowString(u8 x,u8 y, u8 *p,u8 Char_Size);
+                                    ^
+4 warnings and 6 errors generated.
+compiling main.c...
+compiling dma.c...
+compiling i2c.c...
+../Core/Global_IT/Global_IT.c(76): warning: passing 'uint32_t [512]' to parameter of type 'int32_t *' (aka 'int *') converts between pointers to integer types with different sign [-Wpointer-sign]
+    dsp_asm_powerMag(FFT_out);                 //求幅值
+                     ^~~~~~~
+../Core/Global_IT/Global_IT.c(35): note: passing argument to parameter 'IBUFOUT' here
+void dsp_asm_powerMag(int32_t* IBUFOUT) //求谐波幅值
+                               ^
+../Core/Global_IT/Global_IT.c(107): warning: passing 'uint8_t [40]' to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+    sprintf(str, "Vpp=%.2fV,f=%.1fHZ,d:%.1f%%", vpp, max_f_r, duty_cycle); //实际电压和频率
+            ^~~
+D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdio.h(417): note: passing argument to parameter here
+extern _ARMABI int sprintf(char * __restrict /*s*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(1,2)));
+                                                  ^
+../Core/Global_IT/Global_IT.c(139): warning: passing 'char [16]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+    HAL_UART_Transmit(&huart1, "addt 1,0,325\xff\xff\xff", 15, 50);
+                               ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32F1xx_HAL_Driver/Inc\stm32f1xx_hal_uart.h(725): note: passing argument to parameter 'pData' here
+HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+                                                                        ^
+../Core/Global_IT/Global_IT.c(142): warning: passing 'char [4]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+    HAL_UART_Transmit(&huart1, "\xff\xff\xff", 3, 10);
+                               ^~~~~~~~~~~~~~
+../Drivers/STM32F1xx_HAL_Driver/Inc\stm32f1xx_hal_uart.h(725): note: passing argument to parameter 'pData' here
+HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+                                                                        ^
+4 warnings generated.
+compiling Global_IT.c...
+compiling dac.c...
+compiling tim.c...
+compiling gpio.c...
+compiling adc.c...
+compiling oled.c...
+compiling usart.c...
+compiling stm32f1xx_it.c...
+compiling stm32f1xx_hal_msp.c...
+compiling stm32f1xx_hal_gpio_ex.c...
+compiling stm32f1xx_hal_adc_ex.c...
+compiling stm32f1xx_hal.c...
+compiling stm32f1xx_hal_rcc_ex.c...
+compiling stm32f1xx_hal_gpio.c...
+compiling stm32f1xx_hal_pwr.c...
+compiling stm32f1xx_hal_cortex.c...
+compiling stm32f1xx_hal_flash.c...
+compiling stm32f1xx_hal_rcc.c...
+compiling stm32f1xx_hal_adc.c...
+compiling stm32f1xx_hal_dma.c...
+compiling stm32f1xx_hal_flash_ex.c...
+compiling stm32f1xx_hal_exti.c...
+compiling stm32f1xx_hal_dac.c...
+compiling stm32f1xx_hal_dac_ex.c...
+compiling system_stm32f1xx.c...
+compiling stm32f1xx_hal_tim_ex.c...
+compiling stm32f1xx_hal_uart.c...
+compiling stm32f1xx_hal_tim.c...
+compiling stm32f1xx_hal_i2c.c...
+"103RC_DSO\103RC_DSO.axf" - 12 Error(s), 8 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:06

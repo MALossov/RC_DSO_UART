@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:36
- * @LastEditTime: 2022-04-01 09:42:33
+ * @LastEditTime: 2022-04-03 21:14:31
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -20,8 +20,7 @@
 #include "stdlib.h"
 #include "tim.h"
 #include "string.h"
-
+#include "USART_IT.h"
 
 void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef* huart);
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc);
-// void HAL_DAC_ConvCpltCallbackCh1(DAC_HandleTypeDef *hdac);

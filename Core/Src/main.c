@@ -16,8 +16,8 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
+  /* USER CODE END Header */
+  /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
 #include "dac.h"
@@ -64,6 +64,7 @@ uint8_t rxFlg;
 uint8_t rxStr[200];
 uint8_t sendFlag;
 extern uint8_t stopADC;
+DataCTL uiDtc;
 //short save_statue = 0;
 
 /* USER CODE END PV */
@@ -137,6 +138,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   OLED_Init();
 
+  Init_DataCTL();
   OLED_Clear();
   rxPtr = rxStr;
   //printf("HelloWorld!\xff\xff\xff");
@@ -144,6 +146,7 @@ int main(void)
   for (int i = 0;i < 330;i++)
     strcat(uartWavStr, "\xfe");
   strcat(uartWavStr, "\xff\xff\xff");
+  printf("%s", uartWavStr);
   OLED_ShowString(0, 0, "PrePare2ShowF&Vpp", 16);
   //HAL_ADC_Start_IT(&hadc1);
 
@@ -200,9 +203,9 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+  RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = { 0 };
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -221,8 +224,8 @@ void SystemClock_Config(void)
 
   /** Initializes the CPU, AHB and APB buses clocks
   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+    | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -264,11 +267,11 @@ void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed(uint8_t* file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
+     /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
