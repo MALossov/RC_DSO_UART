@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:52
- * @LastEditTime: 2022-04-04 22:47:15
+ * @LastEditTime: 2022-04-04 22:49:32
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -168,7 +168,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     //进行一波串口的DMA转换和发送
     if (showFlag) {
         //sprintf(str, "Vpp=%.4fV,Vma=%.4fV,Vmi=%.4fV", vpp, max_mag * 3.3 / 4096, min_mag * 3.3 / 4096);
-        sprintf(str, "Vpp=%.4fV,f=%.1fHZ,d:%.1f%%", vpp, max_f_r, duty_cycle);//实际电压和频率
+        sprintf(str, "Vpp=%.4fV,f=%.1fHZ,d:%.1f\x25[%.4f,%.4f]", vpp, max_f_r, duty_cycle, max_mag * 3.3 / 4096, min_mag * 3.3 / 4096);//实际电压和频率
         OLED_ShowString(0, 0, str, 16);
         SendTxtData(max_f_r, vpp, duty_cycle, choice);
         if (uiDtc.sj.choice == 2) {

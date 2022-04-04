@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-04-03 14:32:15
- * @LastEditTime: 2022-04-04 21:34:39
+ * @LastEditTime: 2022-04-04 22:48:07
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -50,7 +50,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
         //sendFlag = 1;
         OLED_Clear();
         ChkStr2DTC();
-        OLED_ShowString(0, 4, rxStr, 16);
+        OLED_ShowString(0, 6, rxStr, 16);
         rxPtr = rxStr;
     }
     else if (rxFlg && *aRxBuffer != '#' && *aRxBuffer != '$') {

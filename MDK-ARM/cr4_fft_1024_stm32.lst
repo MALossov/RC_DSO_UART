@@ -2504,13 +2504,13 @@ Symbol: NPT
    Definitions
       At line 46 in file ..\Core\DSP\cr4_fft_1024_stm32.s
    Uses
-      At line 136 in macro ­OPT
+      At line 136 in macro BUTFLY4ZERO_OPT
       at line 228 in file ..\Core\DSP\cr4_fft_1024_stm32.s
-      At line 139 in macro ­OPT
+      At line 139 in macro BUTFLY4ZERO_OPT
       at line 228 in file ..\Core\DSP\cr4_fft_1024_stm32.s
-      At line 142 in macro ­OPT
+      At line 142 in macro BUTFLY4ZERO_OPT
       at line 228 in file ..\Core\DSP\cr4_fft_1024_stm32.s
-      At line 145 in macro ­OPT
+      At line 145 in macro BUTFLY4ZERO_OPT
       at line 228 in file ..\Core\DSP\cr4_fft_1024_stm32.s
 
 1 symbol
