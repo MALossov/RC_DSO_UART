@@ -26,42 +26,20 @@ Project File Date:  04/04/2022
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.16', folder: 'D:\Program\Keil\ARM\ARMCLANG\Bin'
-Rebuild target '103RC_DSO'
-assembling startup_stm32f103xe.s...
-assembling cr4_fft_1024_stm32.s...
-../Core/Global_IT/Global_IT.c(81): warning: passing 'uint32_t [512]' to parameter of type 'int32_t *' (aka 'int *') converts between pointers to integer types with different sign [-Wpointer-sign]
-    dsp_asm_powerMag(FFT_out);                 //求幅值
-                     ^~~~~~~
-../Core/Global_IT/Global_IT.c(44): note: passing argument to parameter 'IBUFOUT' here
-void dsp_asm_powerMag(int32_t* IBUFOUT) //求谐波幅值
-                               ^
-../Core/Global_IT/Global_IT.c(163): warning: passing 'uint8_t [40]' to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-        sprintf(str, "Vpp=%.2fV,f=%.1fHZ,d:%.1f%%", vpp, max_f_r, duty_cycle); //实际电压和频率
-                ^~~
-D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdio.h(417): note: passing argument to parameter here
-extern _ARMABI int sprintf(char * __restrict /*s*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(1,2)));
-                                                  ^
-2 warnings generated.
-compiling Global_IT.c...
-compiling adc.c...
-compiling gpio.c...
-compiling dac.c...
-compiling dma.c...
-compiling i2c.c...
-compiling tim.c...
-../Core/Src/main.c(153): warning: passing 'uint8_t [10000]' to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+Build target '103RC_DSO'
+../Core/Src/main.c(152): warning: passing 'uint8_t [10000]' to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
   sprintf(uartWavStr, "addt 1,0,325\xff\xff\xff");
           ^~~~~~~~~~
 D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdio.h(417): note: passing argument to parameter here
 extern _ARMABI int sprintf(char * __restrict /*s*/, const char * __restrict /*format*/, ...) __attribute__((__nonnull__(1,2)));
                                                   ^
-../Core/Src/main.c(155): warning: passing 'uint8_t [10000]' to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+../Core/Src/main.c(154): warning: passing 'uint8_t [10000]' to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
     strcat(uartWavStr, "\xfe");
            ^~~~~~~~~~
 D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h(93): note: passing argument to parameter here
 extern _ARMABI char *strcat(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(1,2)));
                                                     ^
-../Core/Src/main.c(156): warning: passing 'uint8_t [10000]' to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
+../Core/Src/main.c(155): warning: passing 'uint8_t [10000]' to parameter of type 'char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
   strcat(uartWavStr, "\xff\xff\xff");
          ^~~~~~~~~~
 D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h(93): note: passing argument to parameter here
@@ -75,102 +53,10 @@ void OLED_ShowString(u8 x,u8 y, u8 *p,u8 Char_Size);
                                     ^
 4 warnings generated.
 compiling main.c...
-compiling usart.c...
-compiling stm32f1xx_it.c...
-../Core/USART_IT/USART_IT.c(98): warning: passing 'char [16]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-        HAL_UART_Transmit(&huart1, "addt 1,0,320\xff\xff\xff", 15, 50);
-                                   ^~~~~~~~~~~~~~~~~~~~~~~~~~
-../Drivers/STM32F1xx_HAL_Driver/Inc\stm32f1xx_hal_uart.h(725): note: passing argument to parameter 'pData' here
-HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout);
-                                                                        ^
-../Core/USART_IT/USART_IT.c(101): warning: passing 'char [4]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-        HAL_UART_Transmit(&huart1, "\xff\xff\xff", 3, 10);
-                                   ^~~~~~~~~~~~~~
-../Drivers/STM32F1xx_HAL_Driver/Inc\stm32f1xx_hal_uart.h(725): note: passing argument to parameter 'pData' here
-HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout);
-                                                                        ^
-../Core/USART_IT/USART_IT.c(115): warning: passing 'uint8_t [50]' to parameter of type 'const char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-    if (strcmp(rxStr, tmpCMDCmpr) == 0)
-               ^~~~~
-D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h(125): note: passing argument to parameter here
-extern _ARMABI int strcmp(const char * /*s1*/, const char * /*s2*/) __attribute__((__nonnull__(1,2)));
-                                             ^
-../Core/USART_IT/USART_IT.c(115): warning: incompatible pointer types passing 'uint8_t *[50]' to parameter of type 'const char *' [-Wincompatible-pointer-types]
-    if (strcmp(rxStr, tmpCMDCmpr) == 0)
-                      ^~~~~~~~~~
-D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h(125): note: passing argument to parameter here
-extern _ARMABI int strcmp(const char * /*s1*/, const char * /*s2*/) __attribute__((__nonnull__(1,2)));
-                                                                  ^
-../Core/USART_IT/USART_IT.c(118): warning: passing 'uint8_t [50]' to parameter of type 'const char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-    sscanf(rxStr, "%s-%c", dctlName, &dctlOpt);
-           ^~~~~
-D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdio.h(529): note: passing argument to parameter here
-extern _ARMABI int sscanf(const char * __restrict /*s*/,
-                                                       ^
-../Core/USART_IT/USART_IT.c(145): warning: incompatible pointer types passing 'uint8_t *[50]' to parameter of type 'char *' [-Wincompatible-pointer-types]
-    strcpy(tmpCMDCmpr, rxStr);
-           ^~~~~~~~~~
-D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h(77): note: passing argument to parameter here
-extern _ARMABI char *strcpy(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(1,2)));
-                                                    ^
-../Core/USART_IT/USART_IT.c(145): warning: passing 'uint8_t [50]' to parameter of type 'const char *' converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-    strcpy(tmpCMDCmpr, rxStr);
-                       ^~~~~
-D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h(77): note: passing argument to parameter here
-extern _ARMABI char *strcpy(char * __restrict /*s1*/, const char * __restrict /*s2*/) __attribute__((__nonnull__(1,2)));
-                                                                                    ^
-../Core/USART_IT/USART_IT.c(163): warning: passing 'char [16]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-            HAL_UART_Transmit(&huart1, "addt 1,0,325\xff\xff\xff", 15, 50);
-                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~
-../Drivers/STM32F1xx_HAL_Driver/Inc\stm32f1xx_hal_uart.h(725): note: passing argument to parameter 'pData' here
-HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout);
-                                                                        ^
-../Core/USART_IT/USART_IT.c(166): warning: passing 'char [4]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-            HAL_UART_Transmit(&huart1, "\xff\xff\xff", 3, 10);
-                                       ^~~~~~~~~~~~~~
-../Drivers/STM32F1xx_HAL_Driver/Inc\stm32f1xx_hal_uart.h(725): note: passing argument to parameter 'pData' here
-HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout);
-                                                                        ^
-../Core/USART_IT/USART_IT.c(177): warning: passing 'char [16]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-            HAL_UART_Transmit(&huart1, "addt 1,0,320\xff\xff\xff", 15, 50);
-                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~
-../Drivers/STM32F1xx_HAL_Driver/Inc\stm32f1xx_hal_uart.h(725): note: passing argument to parameter 'pData' here
-HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout);
-                                                                        ^
-../Core/USART_IT/USART_IT.c(180): warning: passing 'char [4]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types where one is of the unique plain 'char' type and the other is not [-Wpointer-sign]
-            HAL_UART_Transmit(&huart1, "\xff\xff\xff", 3, 10);
-                                       ^~~~~~~~~~~~~~
-../Drivers/STM32F1xx_HAL_Driver/Inc\stm32f1xx_hal_uart.h(725): note: passing argument to parameter 'pData' here
-HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout);
-                                                                        ^
-11 warnings generated.
-compiling USART_IT.c...
-compiling oled.c...
-compiling stm32f1xx_hal_msp.c...
-compiling stm32f1xx_hal_gpio_ex.c...
-compiling stm32f1xx_hal.c...
-compiling stm32f1xx_hal_adc_ex.c...
-compiling stm32f1xx_hal_rcc_ex.c...
-compiling stm32f1xx_hal_adc.c...
-compiling stm32f1xx_hal_rcc.c...
-compiling stm32f1xx_hal_gpio.c...
-compiling stm32f1xx_hal_cortex.c...
-compiling stm32f1xx_hal_dma.c...
-compiling stm32f1xx_hal_pwr.c...
-compiling stm32f1xx_hal_flash.c...
-compiling stm32f1xx_hal_flash_ex.c...
-compiling stm32f1xx_hal_exti.c...
-compiling stm32f1xx_hal_dac_ex.c...
-compiling stm32f1xx_hal_dac.c...
-compiling system_stm32f1xx.c...
-compiling stm32f1xx_hal_uart.c...
-compiling stm32f1xx_hal_tim_ex.c...
-compiling stm32f1xx_hal_tim.c...
-compiling stm32f1xx_hal_i2c.c...
 linking...
-Program Size: Code=27400 RO-data=1976 RW-data=668 ZI-data=25116  
+Program Size: Code=27116 RO-data=1976 RW-data=668 ZI-data=24980  
 FromELF: creating hex file...
-"103RC_DSO\103RC_DSO.axf" - 0 Error(s), 17 Warning(s).
+"103RC_DSO\103RC_DSO.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -194,7 +80,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.5.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:05
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

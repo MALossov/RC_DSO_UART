@@ -164,6 +164,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
         OLED_ShowString(0, 0, str, 16);
         SendTxtData(max_f_r, vpp, duty_cycle, choice);
         if (uiDtc.sj.choice == 2) {
+					printf("%s", uartWavStr);
             SendWav();
         }
         else {

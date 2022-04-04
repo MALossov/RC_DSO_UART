@@ -141,20 +141,20 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM2_Init();
   MX_I2C1_Init();
-  MX_USART2_UART_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   OLED_Init();
 
   Init_DataCTL();
-  OLED_Clear();
+
   rxPtr = rxStr;
   //printf("HelloWorld!\xff\xff\xff");
   sprintf(uartWavStr, "addt 1,0,325\xff\xff\xff");
   for (int i = 0; i < 330; i++)
     strcat(uartWavStr, "\xfe");
   strcat(uartWavStr, "\xff\xff\xff");
-  printf("%s", uartWavStr);
+  //printf("%s", uartWavStr);
+  //OLED_Clear();
   OLED_ShowString(0, 0, "PrePare2ShowF&Vpp", 16);
   //HAL_ADC_Start_IT(&hadc1);
 
