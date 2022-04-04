@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-04-03 14:32:15
- * @LastEditTime: 2022-04-04 20:53:25
+ * @LastEditTime: 2022-04-04 21:34:39
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -140,7 +140,7 @@ void ChkStr2DTC() {
         break;
     case 'X':   //显示
         uiDtc.xs = dctlOpt;
-    case 'L':   //数据：理想
+    case 'L':   //数据：理想：波形的选择
         uiDtc.sj.lx = dctlOpt;
         break;
     case 'C':   //采样的情况：带不带放大器
@@ -149,6 +149,8 @@ void ChkStr2DTC() {
     case 'M':   //数据模式
         uiDtc.sj.choice = dctlOpt;
         break;
+    default:
+
     }
     strcpy(tmpCMDCmpr, rxStr);
 }
@@ -159,12 +161,9 @@ void SendTable(float duty) {
 
         for (int Round = 0;Round < 4;Round++) {
             for (int RoundPnt = 0;RoundPnt < 100;RoundPnt++) {
-                for (int j = 0;j < uiDtc.sz;j++) {
-                    if (RoundPnt < duty)
-                        uartWavCache[RoundPnt + Round * 100] = 100;
-                    else uartWavCache[RoundPnt + Round * 100] = 0;
-                }
-                RoundPnt += uiDtc.sz - 1;
+                if (RoundPnt < duty)
+                    uartWavCache[RoundPnt + Round * 100] = 100;
+                else uartWavCache[RoundPnt + Round * 100] = 0;
             }
         }
         if (uiDtc.xs == DC) {   //如果为单次出波时

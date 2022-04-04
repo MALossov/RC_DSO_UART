@@ -3,7 +3,7 @@
 <title>Static Call Graph - [103RC_DSO\103RC_DSO.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image 103RC_DSO\103RC_DSO.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Mon Apr  4 20:58:40 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6160001: Last Updated: Mon Apr  4 21:34:52 2022
 <BR><P>
 <H3>Maximum Stack Usage =        272 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -390,7 +390,7 @@ Global Symbols
 <LI><a href="#[108]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_digits
 </UL>
 
-<P><STRONG><a name="[fa]"></a>__aeabi_fcmpge</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, fcmpge.o(.text))
+<P><STRONG><a name="[fa]"></a>__aeabi_fcmplt</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, fcmplt.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SendTable
 </UL>
 
@@ -1503,11 +1503,11 @@ Global Symbols
 <P><STRONG><a name="[6]"></a>SVC_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f1xx_it.o(.text.SVC_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f103xe.o(RESET)
 </UL>
-<P><STRONG><a name="[8f]"></a>SendTable</STRONG> (Thumb, 364 bytes, Stack size 48 bytes, usart_it.o(.text.SendTable))
-<BR><BR>[Stack]<UL><LI>Max Depth = 104<LI>Call Chain = SendTable &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
+<P><STRONG><a name="[8f]"></a>SendTable</STRONG> (Thumb, 314 bytes, Stack size 32 bytes, usart_it.o(.text.SendTable))
+<BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = SendTable &rArr; HAL_UART_Transmit &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
-<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmpge
+<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fcmplt
 <LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Transmit
 <LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
