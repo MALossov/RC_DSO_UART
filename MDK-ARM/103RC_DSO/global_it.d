@@ -40,4 +40,6 @@
   D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdlib.h \
   ..\Core\DSP\stm32_dsp.h \
   D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\math.h ..\Core\Inc\tim.h \
-  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h
+  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h \
+  ..\Core\USART_IT\USART_IT.h ..\Core\Inc\dma.h \
+  ..\Core\Global_IT\Global_IT.h

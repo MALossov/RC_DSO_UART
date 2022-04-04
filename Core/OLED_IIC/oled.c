@@ -27,7 +27,7 @@ uint8_t SSD1306Addr = 0x78, WriteCom_Addr = 0x00, WriteData_Addr = 0x40;
 void Write_IIC_Command(unsigned char I2C_Command) //写命令
 {
 
-	uint8_t *pData;
+	uint8_t* pData;
 	pData = &I2C_Command;
 	HAL_I2C_Mem_Write(&hi2c1, OLED_ADDRESS, 0x00, I2C_MEMADD_SIZE_8BIT, pData, 1, 100);
 }
@@ -44,7 +44,7 @@ void Write_IIC_Command(unsigned char I2C_Command) //写命令
 void Write_IIC_Data(unsigned char IIC_Data) //写数据
 {
 
-	uint8_t *pData;
+	uint8_t* pData;
 	pData = &IIC_Data;
 	HAL_I2C_Mem_Write(&hi2c1, OLED_ADDRESS, 0x40, I2C_MEMADD_SIZE_8BIT, pData, 1, 100);
 }
@@ -137,7 +137,13 @@ void OLED_On(void)
 void OLED_ShowChar(u8 x, u8 y, u8 chr, u8 Char_Size)
 {
 	unsigned char c = 0, i = 0;
-	c = chr - ' '; //得到偏移后的值
+	if (chr > ' ') {
+		c = chr - ' '; //得到偏移后的值
+	}
+	else {
+		c = chr;	//单片机给出的原始数据
+	}
+
 	if (x > Max_Column - 1)
 	{
 		x = 0;
@@ -194,7 +200,7 @@ void OLED_ShowNum(u8 x, u8 y, u32 num, u8 len, u8 size2)
 	}
 }
 //显示一个字符号串
-void OLED_ShowString(u8 x, u8 y, u8 *chr, u8 Char_Size)
+void OLED_ShowString(u8 x, u8 y, u8* chr, u8 Char_Size)
 {
 	unsigned char j = 0;
 	while (chr[j] != '\0')

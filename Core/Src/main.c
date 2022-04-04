@@ -54,15 +54,22 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint16_t DAC_values[100] = { 2010,2136,2261,2386,2509,2631,2749,2865,2978,3087,3191,3291,3385,3475,3558,3636,3707,3771,3828,3878,3921,3956,3984,4004,4016,4019,4016,4004,3984,3956,3921,3878,3828,3771,3707,3636,3558,3475,3385,3291,3191,3087,2978,2865,2749,2631,2509,2386,2261,2136,2010,1883,1758,1633,1510,1388,1270,1154,1041,932,828,728,634,544,461,383,312,248,191,141,98,63,35,15,3,0,3,15,35,63,98,141,191,248,312,383,461,544,634,728,828,932,1041,1154,1270,1388,1510,1633,1758,1883 };
-uint32_t ADC_Values[1024];//储存ADC数据
+uint16_t DAC_values[100] = { 2010, 2136, 2261, 2386, 2509, 2631, 2749, 2865, 2978, 3087, 3191, 3291, 3385, 3475, 3558,
+                            3636, 3707, 3771, 3828, 3878, 3921, 3956, 3984, 4004, 4016, 4019, 4016, 4004, 3984, 3956,
+                            3921, 3878, 3828, 3771, 3707, 3636, 3558, 3475, 3385, 3291, 3191, 3087, 2978, 2865, 2749,
+                            2631, 2509, 2386, 2261, 2136, 2010, 1883, 1758, 1633, 1510, 1388, 1270, 1154, 1041, 932,
+                            828, 728, 634, 544, 461, 383, 312, 248, 191, 141, 98, 63, 35, 15, 3, 0, 3, 15, 35, 63, 98,
+                            141, 191, 248, 312, 383, 461, 544, 634, 728, 828, 932, 1041, 1154, 1270, 1388, 1510, 1633,
+                            1758, 1883 };
 
+uint8_t sinTableLX[384] = { 64,67,70,73,76,79,82,85,88,91,94,97,99,102,104,107,109,111,113,115,117,119,120,122,123,124,125,126,126,127,127,127,127,127,127,127,126,125,124,123,122,121,119,118,116,114,112,110,108,106,103,101,98,95,92,90,87,84,81,78,75,71,68,65,62,59,56,52,49,46,43,40,37,35,32,29,26,24,21,19,17,15,13,11,9,8,6,5,4,3,2,1,0,0,0,0,0,0,0,1,1,2,3,4,5,7,8,10,12,14,16,18,20,23,25,28,30,33,36,39,42,45,48,51,54,57,60,63,64,67,70,73,76,79,82,85,88,91,94,97,99,102,104,107,109,111,113,115,117,119,120,122,123,124,125,126,126,127,127,127,127,127,127,127,126,125,124,123,122,121,119,118,116,114,112,110,108,106,103,101,98,95,92,90,87,84,81,78,75,71,68,65,62,59,56,52,49,46,43,40,37,35,32,29,26,24,21,19,17,15,13,11,9,8,6,5,4,3,2,1,0,0,0,0,0,0,0,1,1,2,3,4,5,7,8,10,12,14,16,18,20,23,25,28,30,33,36,39,42,45,48,51,54,57,60,63,64,67,70,73,76,79,82,85,88,91,94,97,99,102,104,107,109,111,113,115,117,119,120,122,123,124,125,126,126,127,127,127,127,127,127,127,126,125,124,123,122,121,119,118,116,114,112,110,108,106,103,101,98,95,92,90,87,84,81,78,75,71,68,65,62,59,56,52,49,46,43,40,37,35,32,29,26,24,21,19,17,15,13,11,9,8,6,5,4,3,2,1,0,0,0,0,0,0,0,1,1,2,3,4,5,7,8,10,12,14,16,18,20,23,25,28,30,33,36,39,42,45,48,51,54,57,60,63 };
+
+uint32_t ADC_Values[1024];//储存ADC数据
 uint8_t aRxBuffer[2];
 uint8_t uartWavStr[10000];
 uint8_t* rxPtr;
 uint8_t rxFlg;
 uint8_t rxStr[200];
-uint8_t sendFlag;
 extern uint8_t stopADC;
 DataCTL uiDtc;
 //short save_statue = 0;
@@ -135,6 +142,7 @@ int main(void)
   MX_TIM2_Init();
   MX_I2C1_Init();
   MX_USART2_UART_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
   OLED_Init();
 
@@ -143,7 +151,7 @@ int main(void)
   rxPtr = rxStr;
   //printf("HelloWorld!\xff\xff\xff");
   sprintf(uartWavStr, "addt 1,0,325\xff\xff\xff");
-  for (int i = 0;i < 330;i++)
+  for (int i = 0; i < 330; i++)
     strcat(uartWavStr, "\xfe");
   strcat(uartWavStr, "\xff\xff\xff");
   printf("%s", uartWavStr);
@@ -151,6 +159,8 @@ int main(void)
   //HAL_ADC_Start_IT(&hadc1);
 
   HAL_UART_Receive_IT(&huart1, aRxBuffer, 1);
+
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
 
   HAL_TIM_Base_Start(&htim2);//DAC计时
   HAL_DAC_Start_DMA(&hdac, DAC1_CHANNEL_1, (uint32_t*)DAC_values, 100, DAC_ALIGN_12B_R);
@@ -163,36 +173,35 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+  while (1) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
 //		if(stopADC){
 //    HAL_UART_Receive_IT(&huart1, aRxBuffer, 1);
 //		}
-    /*if (save_statue == 1)
-    {
-      for (short i = 0;i < 500;i++)
-      {
-        sprintf(text, "%ld,%hu\r\n", num * 1, ADC_values[i]);
-        HAL_UART_Transmit(&huart1, text, strlen(text), 100);
-        num++;
-      }
-      if (save_statue == 1) save_statue = 0;
-    }
-    else if (save_statue == 2)
-    {
-      for (short i = 500;i < 1000;i++)
-      {
-        sprintf(text, "%ld,%hu\r\n", num * 1, ADC_values[i]);
-        HAL_UART_Transmit(&huart1, text, strlen(text), 100);
-        num++;
-      }
-      if (save_statue == 2) save_statue = 0;
-    }
+        /*if (save_statue == 1)
+        {
+          for (short i = 0;i < 500;i++)
+          {
+            sprintf(text, "%ld,%hu\r\n", num * 1, ADC_values[i]);
+            HAL_UART_Transmit(&huart1, text, strlen(text), 100);
+            num++;
+          }
+          if (save_statue == 1) save_statue = 0;
+        }
+        else if (save_statue == 2)
+        {
+          for (short i = 500;i < 1000;i++)
+          {
+            sprintf(text, "%ld,%hu\r\n", num * 1, ADC_values[i]);
+            HAL_UART_Transmit(&huart1, text, strlen(text), 100);
+            num++;
+          }
+          if (save_statue == 2) save_statue = 0;
+        }
 
-  }*/
+      }*/
   }
   /* USER CODE END 3 */
 }
@@ -254,7 +263,7 @@ void SystemClock_Config(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
+    /* User can add his own implementation to report the HAL error return state */
 
   /* USER CODE END Error_Handler_Debug */
 }

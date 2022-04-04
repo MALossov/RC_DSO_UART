@@ -2,10 +2,12 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-04-03 14:32:04
- * @LastEditTime: 2022-04-03 21:26:18
+ * @LastEditTime: 2022-04-04 14:18:21
  * @LastEditors: MALossov
  * @Reference:
  */
+#ifndef USART_IT_H
+#define USART_IT_H
 
 #include "stm32f1xx_it.h"
 #include "adc.h"
@@ -19,6 +21,8 @@
 #include "string.h"
 #include "dma.h"
 #include "Global_IT.h"
+
+
 
  //采样结构体：放大器，默认
 typedef enum {
@@ -70,3 +74,8 @@ typedef struct {
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart);
 void Init_DataCTL();
+void SendWav();
+void SendTable(float duty);
+void ChkStr2DTC();
+void Init_DataCTL();
+#endif // !USART_IT_H

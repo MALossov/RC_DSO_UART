@@ -38,4 +38,7 @@
   ..\Core\Inc\dac.h D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\Core\Inc\usart.h ..\Core\OLED_IIC\oled.h ..\Core\Inc\main.h \
   D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdlib.h ..\Core\Inc\tim.h \
-  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h ..\Core\Inc\dma.h
+  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\string.h ..\Core\Inc\dma.h \
+  ..\Core\Global_IT\Global_IT.h ..\Core\DSP\stm32_dsp.h \
+  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\math.h \
+  ..\Core\USART_IT\USART_IT.h

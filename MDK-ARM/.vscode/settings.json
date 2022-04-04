@@ -1,6 +1,7 @@
 {
     "files.associations": {
+        "*.c": "c",
         "usart_it.h": "c",
-        "usart.h": "c"
+        "stm32_dsp.h": "c"
     }
 }
