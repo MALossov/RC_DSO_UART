@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:52
- * @LastEditTime: 2022-04-04 19:14:51
+ * @LastEditTime: 2022-04-04 20:47:53
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -18,6 +18,7 @@ extern uint8_t uartWavStr[1000];
 uint8_t uartWavCache[1000];
 uint8_t showFlag;
 uint16_t pwmVal;
+extern uint8_t rxStr[50];
 
 static uint8_t choice = 2, times = 0;
 
@@ -30,6 +31,8 @@ extern uint8_t aRxBuffer[2];
 
 
 static uint8_t downFlg;
+
+void GetUARTReceiveITWork();
 
 int fputc(int ch, FILE* f)
 {
@@ -170,17 +173,17 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
         else {
             SendTable(duty_cycle);
         }
-
-        if (uiDtc.xs == LX) {
-            HAL_Delay(1000);
-        }
     }
+
+    GetUARTReceiveITWork();
 
     HAL_ADC_Start_DMA(&hadc1, ADC_Values, 1024); //开启adc
 }
 
+
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
-    if (pwmVal < 1000 && downFlg == 0) {
+    if (pwmVal < 2000 && downFlg == 0) {
         pwmVal++;
         __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, pwmVal);
     }
@@ -189,12 +192,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
         __HAL_TIM_SetCompare(&htim4, TIM_CHANNEL_1, pwmVal);
     }
 
-    if (pwmVal == 1000) {
+    if (pwmVal == 2000) {
         downFlg = 1;
     }
     else if (pwmVal == 0) {
         downFlg = 0;
     }
+
+    GetUARTReceiveITWork();
+
     HAL_TIM_Base_Start_IT(&htim4);
     HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
     HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);

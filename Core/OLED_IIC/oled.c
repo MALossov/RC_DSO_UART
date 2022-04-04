@@ -138,14 +138,14 @@ void OLED_On(void)
 void OLED_ShowChar(u8 x, u8 y, u8 chr, u8 Char_Size)
 {
 	unsigned char c = 0, i = 0;
-	
+
 	if (chr >= ' ') {
 		c = chr - ' '; //得到偏移后的值
 	}
 	else {
-		c = chr;	//单片机给出的原始数据
+		c = chr + 16;	//单片机给出的原始数据
 	}
-//	c = chr - ' ';
+	//	c = chr - ' ';
 
 	if (x > Max_Column - 1)
 	{

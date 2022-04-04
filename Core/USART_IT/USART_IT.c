@@ -2,12 +2,14 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-04-03 14:32:15
- * @LastEditTime: 2022-04-04 19:11:51
+ * @LastEditTime: 2022-04-04 20:53:25
  * @LastEditors: MALossov
  * @Reference:
  */
 
 #include "USART_IT.h"
+
+extern UART_HandleTypeDef huart1;
 
 extern uint8_t* rxPtr;
 extern uint8_t aRxBuffer[2];
@@ -64,15 +66,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
         HAL_ADC_Start_DMA(&hadc1, ADC_Values, 1024);
     }
 
-    if (HAL_UART_Receive_IT(&huart1, aRxBuffer, 1) != HAL_OK)
-    {
-        do {
-            if (huart1.gState == HAL_UART_STATE_BUSY_TX)
-            {
-                continue;
-            }
-        } while (HAL_UART_Receive_IT(&huart1, aRxBuffer, 1) != HAL_BUSY);
-    }
+    GetUARTReceiveITWork();
 }
 
 void Init_DataCTL() {
@@ -82,13 +76,14 @@ void Init_DataCTL() {
     uiDtc.py = 75;
     uiDtc.sj.choice = 2;
     uiDtc.sj.cy = DEFALULT;
-    uiDtc.xs = LX;
+    uiDtc.xs = DC;
 }
 
 void SendWav() {
     if (uiDtc.xs == DC) {
-        uint8_t tmpRnd = 400 / uiDtc.sz + 1;
-        for (int i = 0;i < tmpRnd;i++) {
+        static uint8_t tmpRnd;
+        tmpRnd = uiDtc.sz;
+        for (int i = 0;i < 400 / tmpRnd + 1;i++) {
             for (int j = 0;j < uiDtc.sz;j++) {
                 uartWavCache[i * tmpRnd + j] = (uint8_t)((((ADC_Values[i] >> 6) << uiDtc.fd) + uiDtc.py - 75));
             }
@@ -101,7 +96,7 @@ void SendWav() {
         HAL_UART_Transmit(&huart1, "\xff\xff\xff", 3, 10);
     }
     else {
-        HAL_UART_Transmit(&huart1, uartWavStr, sizeof(uartWavStr), 400);
+        HAL_UART_Transmit(&huart1, uartWavStr, 320, 400);
 
         for (int i = 0;i < 400 / uiDtc.sz + 1;i++) {
             for (int j = 0;j < uiDtc.sz;j++) {
@@ -160,7 +155,7 @@ void ChkStr2DTC() {
 
 void SendTable(float duty) {
     if (uiDtc.sj.lx == 2) { //如果理想输出的波形为方波时
-        HAL_UART_Transmit(&huart1, uartWavStr, sizeof(uartWavStr), 400);
+        //HAL_UART_Transmit(&huart1, uartWavStr, sizeof(uartWavStr), 400);
 
         for (int Round = 0;Round < 4;Round++) {
             for (int RoundPnt = 0;RoundPnt < 100;RoundPnt++) {
@@ -174,8 +169,8 @@ void SendTable(float duty) {
         }
         if (uiDtc.xs == DC) {   //如果为单次出波时
 
-            HAL_UART_Transmit(&huart1, uartWavStr, sizeof(uartWavStr), 400);
-            HAL_UART_Transmit(&huart1, "addt 1,0,400\xff\xff\xff", 15, 50);
+            //HAL_UART_Transmit(&huart1, uartWavStr, sizeof(uartWavStr), 400);
+            HAL_UART_Transmit(&huart1, "addt 1,0,320\xff\xff\xff", 15, 50);
             //while (*aRxBuffer != 0xFE || *aRxBuffer != 0xFF);
             HAL_UART_Transmit(&huart1, uartWavCache, 330, 100);
             HAL_UART_Transmit(&huart1, "\xff\xff\xff", 3, 10);
@@ -191,15 +186,27 @@ void SendTable(float duty) {
         if (uiDtc.xs == DC) {
             HAL_UART_Transmit(&huart1, "addt 1,0,320\xff\xff\xff", 15, 50);
             //while (*aRxBuffer != 0xFE || *aRxBuffer != 0xFF);
-            HAL_UART_Transmit(&huart1, sinTableLX, 400, 100);
+            HAL_UART_Transmit(&huart1, sinTableLX, 320, 100);
             HAL_UART_Transmit(&huart1, "\xff\xff\xff", 3, 10);
             //while (*aRxBuffer != 0xFF || *aRxBuffer != 0xFD);
         }
         else {
-            HAL_UART_Transmit(&huart1, uartWavStr, sizeof(uartWavStr), 400);
+            HAL_UART_Transmit(&huart1, uartWavStr, 320, 400);
             for (int i = 0;i < 320;i++) {
                 printf("add 1,0,%d\xff\xff\xff", sinTableLX[i]);
             }
         }
+    }
+}
+
+void GetUARTReceiveITWork() {
+    if (HAL_UART_Receive_IT(&huart1, aRxBuffer, 1) != HAL_OK)
+    {
+        do {
+            if (huart1.gState == HAL_UART_STATE_BUSY_TX)
+            {
+                continue;
+            }
+        } while (HAL_UART_Receive_IT(&huart1, aRxBuffer, 1) != HAL_BUSY);
     }
 }

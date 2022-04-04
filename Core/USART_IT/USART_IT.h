@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-04-03 14:32:04
- * @LastEditTime: 2022-04-04 14:18:21
+ * @LastEditTime: 2022-04-04 20:57:24
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -78,4 +78,5 @@ void SendWav();
 void SendTable(float duty);
 void ChkStr2DTC();
 void Init_DataCTL();
+void GetUARTReceiveITWork();
 #endif // !USART_IT_H
