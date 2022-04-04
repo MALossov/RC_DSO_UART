@@ -150,7 +150,7 @@ void ChkStr2DTC() {
         uiDtc.sj.choice = dctlOpt;
         break;
     default:
-
+        break;
     }
     strcpy(tmpCMDCmpr, rxStr);
 }
