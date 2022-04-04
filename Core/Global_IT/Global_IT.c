@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:52
- * @LastEditTime: 2022-04-04 22:39:16
+ * @LastEditTime: 2022-04-04 22:47:15
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -11,6 +11,8 @@
 uint32_t FFT_in[1024];     // fft输入
 uint32_t FFT_out[512];     // fft输出
 uint32_t FFT_out_mag[512]; // fft振幅
+uint32_t max_f = 0, max_mag = 0, min_mag = 0; //最大振幅和相应频率和最小振幅
+
 uint8_t str[40] = "55";
 uint32_t sampling_rate_list[3] = { 1000, 5000, 10000 };
 uint16_t tim3period[3] = { 999, 199, 99 };
@@ -72,7 +74,6 @@ void CalcFFT(float* max_f_r, float* vpp, float* duty_cycle) {
     (*duty_cycle) = 0;
 
     static uint32_t sampling_rate = 10000;
-    uint32_t max_f = 0, max_mag = 0, min_mag = 0; //最大振幅和相应频率和最小振幅
     uint32_t mid_mag = 0, duty_point = 0;         //电压中间值，高于间值的点数
     ; //真实的频率,峰峰值，占空比
 /*************************FFT********************************/
@@ -163,11 +164,11 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     float vpp;
     float duty_cycle;
     CalcFFT(&max_f_r, &vpp, &duty_cycle);
-    extern uint32_t max_mag, min_mag;
 
     //进行一波串口的DMA转换和发送
     if (showFlag) {
-        sprintf(str, "Vpp=%.4fV,Vma=%.4fV,Vmi=%.4fV", vpp, max_mag * 3.3 / 4096, min_mag * 3.3 / 4096);
+        //sprintf(str, "Vpp=%.4fV,Vma=%.4fV,Vmi=%.4fV", vpp, max_mag * 3.3 / 4096, min_mag * 3.3 / 4096);
+        sprintf(str, "Vpp=%.4fV,f=%.1fHZ,d:%.1f%%", vpp, max_f_r, duty_cycle);//实际电压和频率
         OLED_ShowString(0, 0, str, 16);
         SendTxtData(max_f_r, vpp, duty_cycle, choice);
         if (uiDtc.sj.choice == 2) {
