@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Core"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Core">
+				<Option output="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Core.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/."/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/DSP"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Global_IT"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/OLED_IIC"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/USART_IT"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/../Drivers/STM32F1xx_HAL_Driver/Inc"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/../Drivers/CMSIS/Include"/>
+					<Add directory="D:/Program/Keil/ARM/ARMCLANG/include"/>
+					<Add directory="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include"/>
+					<Add directory="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../include"/>
+					<Add directory="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed"/>
+					<Add directory="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 Core"/>
+					<CompileFile command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Core/fast">
+				<Option output="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Core.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/."/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/DSP"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Global_IT"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/OLED_IIC"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/USART_IT"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/../Drivers/STM32F1xx_HAL_Driver/Inc"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy"/>
+					<Add directory="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/../Drivers/CMSIS/Include"/>
+					<Add directory="D:/Program/Keil/ARM/ARMCLANG/include"/>
+					<Add directory="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include"/>
+					<Add directory="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../include"/>
+					<Add directory="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed"/>
+					<Add directory="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/11.2.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 Core/fast"/>
+					<CompileFile command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/Program/apps/CLion/ch-0/213.6777.58/bin/mingw/bin/mingw32-make.exe -f &quot;E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/DSP/stm32_dsp.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/DSP/table_fft.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Global_IT/Global_IT.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Global_IT/Global_IT.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc/adc.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc/dac.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc/dma.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc/gpio.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc/i2c.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc/main.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc/stm32f1xx_hal_conf.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc/stm32f1xx_it.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc/tim.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Inc/usart.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/OLED_IIC/oled.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/OLED_IIC/oled.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/OLED_IIC/oledfont.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src/adc.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src/dac.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src/dma.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src/gpio.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src/i2c.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src/main.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src/stm32f1xx_hal_msp.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src/stm32f1xx_it.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src/system_stm32f1xx.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src/tim.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/Src/usart.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/USART_IT/USART_IT.c">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/USART_IT/USART_IT.h">
+			<Option target="Core"/>
+		</Unit>
+		<Unit filename="E:/STM/SicenceAssociation/TryUp4DSO/RC_DSO_UI/Core/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

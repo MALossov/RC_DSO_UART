@@ -33,6 +33,7 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdint.h"
+#include "i2c.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

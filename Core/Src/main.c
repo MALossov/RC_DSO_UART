@@ -16,8 +16,8 @@
   *
   ******************************************************************************
   */
-  /* USER CODE END Header */
-  /* Includes ------------------------------------------------------------------*/
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
 #include "dac.h"
@@ -66,12 +66,14 @@ uint8_t sinTableLX[384] = { 64,67,70,73,76,79,82,85,88,91,94,97,99,102,104,107,1
 
 uint32_t ADC_Values[1024];//储存ADC数据
 uint8_t aRxBuffer[2];
-uint8_t uartWavStr[10000];
+uint8_t uartWavStr[1000];
 uint8_t* rxPtr;
 uint8_t rxFlg;
 uint8_t rxStr[200];
 extern uint8_t stopADC;
 DataCTL uiDtc;
+extern I2C_HandleTypeDef hi2c1;
+
 //short save_statue = 0;
 
 /* USER CODE END PV */
@@ -140,26 +142,28 @@ int main(void)
   MX_TIM3_Init();
   MX_USART1_UART_Init();
   MX_TIM2_Init();
-  MX_I2C1_Init();
   MX_TIM4_Init();
+  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
   OLED_Init();
+  OLED_Clear();
+  OLED_ShowString(0, 0, "PrePare2ShowF&Vpp", 16);
 
   Init_DataCTL();
 
   rxPtr = rxStr;
   //printf("HelloWorld!\xff\xff\xff");
-  sprintf(uartWavStr, "addt 1,0,325\xff\xff\xff");
-  for (int i = 0; i < 330; i++)
+  sprintf(uartWavStr, "addt 1,0,320\xff\xff\xff");
+  for (int i = 0; i < 320; i++)
     strcat(uartWavStr, "\xfe");
   strcat(uartWavStr, "\xff\xff\xff");
   //printf("%s", uartWavStr);
-  //OLED_Clear();
-  OLED_ShowString(0, 0, "PrePare2ShowF&Vpp", 16);
+
   //HAL_ADC_Start_IT(&hadc1);
 
   HAL_UART_Receive_IT(&huart1, aRxBuffer, 1);
 
+  HAL_TIM_Base_Start_IT(&htim4);
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
 
   HAL_TIM_Base_Start(&htim2);//DAC计时
@@ -212,9 +216,9 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
-  RCC_PeriphCLKInitTypeDef PeriphClkInit = { 0 };
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -233,8 +237,8 @@ void SystemClock_Config(void)
 
   /** Initializes the CPU, AHB and APB buses clocks
   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
-    | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -276,11 +280,11 @@ void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t* file, uint32_t line)
+void assert_failed(uint8_t *file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-     /* USER CODE END 6 */
+  /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

@@ -35,7 +35,8 @@
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim_ex.h \
   ..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h \
-  ..\Core\Inc\dac.h D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdio.h \
+  ..\Core\Inc\i2c.h ..\Core\Inc\dac.h \
+  D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdio.h \
   ..\Core\Inc\usart.h ..\Core\OLED_IIC\oled.h ..\Core\Inc\main.h \
   D:\Program\Keil\ARM\ARMCLANG\Bin\..\include\stdlib.h \
   ..\Core\DSP\stm32_dsp.h \

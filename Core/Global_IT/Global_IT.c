@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:52
- * @LastEditTime: 2022-04-04 14:15:26
+ * @LastEditTime: 2022-04-04 19:14:51
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -14,8 +14,8 @@ uint32_t FFT_out_mag[512]; // fft振幅
 uint8_t str[40] = "55";
 uint32_t sampling_rate_list[3] = { 1000, 5000, 10000 };
 uint16_t tim3period[3] = { 999, 199, 99 };
-extern uint8_t uartWavStr[10000];
-uint8_t uartWavCache[500];
+extern uint8_t uartWavStr[1000];
+uint8_t uartWavCache[1000];
 uint8_t showFlag;
 uint16_t pwmVal;
 
@@ -164,11 +164,15 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
         OLED_ShowString(0, 0, str, 16);
         SendTxtData(max_f_r, vpp, duty_cycle, choice);
         if (uiDtc.sj.choice == 2) {
-					printf("%s", uartWavStr);
+            //printf("%s", uartWavStr);
             SendWav();
         }
         else {
             SendTable(duty_cycle);
+        }
+
+        if (uiDtc.xs == LX) {
+            HAL_Delay(1000);
         }
     }
 
@@ -176,25 +180,24 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
-
-    if (htim == &htim4) {
-        if (pwmVal < 1000 && downFlg == 0) {
-            pwmVal++;
-            __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, pwmVal);
-        }
-        else {
-            pwmVal--;
-            __HAL_TIM_SetCompare(&htim4, TIM_CHANNEL_1, pwmVal);
-        }
-
-        if (pwmVal == 1000) {
-            downFlg = 1;
-        }
-        else if (pwmVal == 0) {
-            downFlg = 0;
-        }
+    if (pwmVal < 1000 && downFlg == 0) {
+        pwmVal++;
+        __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, pwmVal);
+    }
+    else {
+        pwmVal--;
+        __HAL_TIM_SetCompare(&htim4, TIM_CHANNEL_1, pwmVal);
     }
 
+    if (pwmVal == 1000) {
+        downFlg = 1;
+    }
+    else if (pwmVal == 0) {
+        downFlg = 0;
+    }
+    HAL_TIM_Base_Start_IT(&htim4);
+    HAL_TIM_PWM_Stop(&htim4, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
 }
 
 void SendTxtData(float max_f_r, float vpp, float duty_cycle, uint8_t choice) {    //向屏幕控件发送建值

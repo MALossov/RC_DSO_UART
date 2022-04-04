@@ -9,7 +9,8 @@
 #include "stdlib.h"
 #include "oledfont.h"
 
-extern I2C_HandleTypeDef hi2c1;
+extern I2C_HandleTypeDef hi2c2;
+
 // OLED的显存
 //存放格式如下.
 //[0]0 1 2 3 ... 127
@@ -29,7 +30,7 @@ void Write_IIC_Command(unsigned char I2C_Command) //写命令
 
 	uint8_t* pData;
 	pData = &I2C_Command;
-	HAL_I2C_Mem_Write(&hi2c1, OLED_ADDRESS, 0x00, I2C_MEMADD_SIZE_8BIT, pData, 1, 100);
+	HAL_I2C_Mem_Write(&hi2c2, OLED_ADDRESS, 0x00, I2C_MEMADD_SIZE_8BIT, pData, 1, 100);
 }
 
 /*
@@ -46,7 +47,7 @@ void Write_IIC_Data(unsigned char IIC_Data) //写数据
 
 	uint8_t* pData;
 	pData = &IIC_Data;
-	HAL_I2C_Mem_Write(&hi2c1, OLED_ADDRESS, 0x40, I2C_MEMADD_SIZE_8BIT, pData, 1, 100);
+	HAL_I2C_Mem_Write(&hi2c2, OLED_ADDRESS, 0x40, I2C_MEMADD_SIZE_8BIT, pData, 1, 100);
 }
 
 void OLED_WR_Byte(unsigned dat, unsigned cmd)
@@ -137,12 +138,14 @@ void OLED_On(void)
 void OLED_ShowChar(u8 x, u8 y, u8 chr, u8 Char_Size)
 {
 	unsigned char c = 0, i = 0;
+	
 	if (chr >= ' ') {
 		c = chr - ' '; //得到偏移后的值
 	}
 	else {
 		c = chr;	//单片机给出的原始数据
 	}
+//	c = chr - ' ';
 
 	if (x > Max_Column - 1)
 	{
