@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:52
- * @LastEditTime: 2022-04-04 20:47:53
+ * @LastEditTime: 2022-04-04 22:39:16
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -91,14 +91,17 @@ void CalcFFT(float* max_f_r, float* vpp, float* duty_cycle) {
         }
     }
     /********************计算峰峰值*******************************/
-    max_mag = min_mag = ADC_Values[1]; //计算峰峰值
-    for (int i = 0; i < 1024; i++)     //计算峰峰值
-    {
-        if (ADC_Values[i] > max_mag)
-            max_mag = ADC_Values[i];
-        else if (ADC_Values[i] < min_mag)
-            min_mag = ADC_Values[i];
-    }
+    // max_mag = min_mag = ADC_Values[1]; //计算峰峰值
+    // for (int i = 0; i < 1024; i++)     //计算峰峰值
+    // {
+    //     if (ADC_Values[i] > max_mag)
+    //         max_mag = ADC_Values[i];
+    //     else if (ADC_Values[i] < min_mag)
+    //         min_mag = ADC_Values[i];
+    // }
+
+    get_maxandmin(&max_mag, &min_mag);
+
     if (uiDtc.sj.cy == 1) {
         (*vpp) = (float)(((max_mag - min_mag) * 3.3 / 4096) / 2);
     }
@@ -160,10 +163,11 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     float vpp;
     float duty_cycle;
     CalcFFT(&max_f_r, &vpp, &duty_cycle);
+    extern uint32_t max_mag, min_mag;
 
     //进行一波串口的DMA转换和发送
     if (showFlag) {
-        sprintf(str, "Vpp=%.2fV,f=%.1fHZ,d:%.1f%%", vpp, max_f_r, duty_cycle); //实际电压和频率
+        sprintf(str, "Vpp=%.4fV,Vma=%.4fV,Vmi=%.4fV", vpp, max_mag * 3.3 / 4096, min_mag * 3.3 / 4096);
         OLED_ShowString(0, 0, str, 16);
         SendTxtData(max_f_r, vpp, duty_cycle, choice);
         if (uiDtc.sj.choice == 2) {
@@ -219,4 +223,44 @@ void SendTxtData(float max_f_r, float vpp, float duty_cycle, uint8_t choice) {  
     sprintf(strVpp, "t15.txt=\"%.3f\"\xff\xff\xff", vpp);
 
     printf("%s%s%s%s", strHZ, strSplRt, strDuty, strVpp);
+}
+
+#define numformags 10
+uint8_t	get_maxandmin(uint32_t* max_mag, uint32_t* min_mag)
+{
+    static uint32_t max_mags[numformags] = { 0 }, min_mags[numformags] = { 0 };//储存numformags次电压极值的值
+    static uint8_t index = 0, showflag = 0;//index读取到第几次；showfag返回值用来标注是否读满
+    static uint32_t max_in_mags = 0, min_in_mags = 0;//几个极值中的极值
+    max_mags[index] = min_mags[index] = ADC_Values[0];
+    for (int i = 0;i < 1024;i++)
+    {
+        if (ADC_Values[i] > max_mags[index]) max_mags[index] = ADC_Values[i];
+        else if (ADC_Values[i] < min_mags[index]) min_mags[index] = ADC_Values[i];
+    }
+    /************求max——mags的平均值********************/
+    max_in_mags = max_mags[0];min_in_mags = max_mags[0];//初值
+    for (uint32_t i = 0, t_max = 0;i < numformags;i++)
+    {
+        if (max_mags[i] > max_in_mags) max_in_mags = max_mags[i];//找最大
+        else if (max_mags[i] < min_in_mags) min_in_mags = max_mags[i];//找最小
+        t_max += max_mags[i];
+        if (i == (numformags - 1)) { t_max -= (max_in_mags + min_in_mags);*max_mag = t_max / (numformags - 2); }//去掉最大最小求平均
+    }
+    /*************求min_mags的平均值*********************/
+    max_in_mags = min_mags[0];min_in_mags = min_mags[0];//初值
+    for (uint32_t i = 0, t_min = 0;i < numformags;i++)
+    {
+        if (min_mags[i] > max_in_mags) max_in_mags = min_mags[i];//找最大
+        else if (min_mags[i] < min_in_mags) min_in_mags = min_mags[i];//找最小
+        t_min += min_mags[i];
+        if (i == (numformags - 1)) { t_min -= (max_in_mags + min_in_mags);*min_mag = t_min / (numformags - 2); }//去掉最大最小求均值
+    }
+    if (index == (numformags - 1))//读满了，开启显示并且归零index
+    {
+        if (showflag == 0) showflag = 1;
+        index = 0;
+    }
+    else index++;
+
+    return showflag;
 }
