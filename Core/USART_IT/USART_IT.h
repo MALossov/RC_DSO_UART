@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-04-03 14:32:04
- * @LastEditTime: 2022-04-04 20:57:24
+ * @LastEditTime: 2022-04-05 14:59:06
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -68,6 +68,7 @@ typedef struct {
     XS xs;//= 2;    //显示模式
     SJ sj;  //数据模式，使用数据结构体
     uint8_t py; //偏移量
+    uint8_t Reset;
 }DataCTL;
 
 

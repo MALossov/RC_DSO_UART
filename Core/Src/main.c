@@ -16,8 +16,8 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
+  /* USER CODE END Header */
+  /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
 #include "dac.h"
@@ -183,33 +183,37 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1) {
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
-//		if(stopADC){
-//    HAL_UART_Receive_IT(&huart1, aRxBuffer, 1);
-//		}
-        /*if (save_statue == 1)
-        {
-          for (short i = 0;i < 500;i++)
-          {
-            sprintf(text, "%ld,%hu\r\n", num * 1, ADC_values[i]);
-            HAL_UART_Transmit(&huart1, text, strlen(text), 100);
-            num++;
-          }
-          if (save_statue == 1) save_statue = 0;
-        }
-        else if (save_statue == 2)
-        {
-          for (short i = 500;i < 1000;i++)
-          {
-            sprintf(text, "%ld,%hu\r\n", num * 1, ADC_values[i]);
-            HAL_UART_Transmit(&huart1, text, strlen(text), 100);
-            num++;
-          }
-          if (save_statue == 2) save_statue = 0;
-        }
+    if (uiDtc.Reset == 1) {
+      uiDtc.Reset = 0;
+      __set_FAULTMASK(1);
+      HAL_NVIC_SystemReset();
+    }
+    //		if(stopADC){
+    //    HAL_UART_Receive_IT(&huart1, aRxBuffer, 1);
+    //		}
+            /*if (save_statue == 1)
+            {
+              for (short i = 0;i < 500;i++)
+              {
+                sprintf(text, "%ld,%hu\r\n", num * 1, ADC_values[i]);
+                HAL_UART_Transmit(&huart1, text, strlen(text), 100);
+                num++;
+              }
+              if (save_statue == 1) save_statue = 0;
+            }
+            else if (save_statue == 2)
+            {
+              for (short i = 500;i < 1000;i++)
+              {
+                sprintf(text, "%ld,%hu\r\n", num * 1, ADC_values[i]);
+                HAL_UART_Transmit(&huart1, text, strlen(text), 100);
+                num++;
+              }
+              if (save_statue == 2) save_statue = 0;
+            }
 
-      }*/
+          }*/
   }
   /* USER CODE END 3 */
 }
@@ -220,9 +224,9 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+  RCC_OscInitTypeDef RCC_OscInitStruct = { 0 };
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = { 0 };
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = { 0 };
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -241,8 +245,8 @@ void SystemClock_Config(void)
 
   /** Initializes the CPU, AHB and APB buses clocks
   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+    | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -284,11 +288,11 @@ void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+void assert_failed(uint8_t* file, uint32_t line)
 {
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
+     /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

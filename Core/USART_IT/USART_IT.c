@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-04-03 14:32:15
- * @LastEditTime: 2022-04-05 14:44:49
+ * @LastEditTime: 2022-04-05 14:59:07
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -149,6 +149,9 @@ void ChkStr2DTC() {
         break;
     case 'M':   //数据模式
         uiDtc.sj.choice = dctlOpt;
+        break;
+    case 'R':
+        uiDtc.Reset = 1;
         break;
     default:
         break;
