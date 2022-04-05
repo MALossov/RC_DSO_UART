@@ -12,6 +12,7 @@ uint32_t FFT_in[1024];     // fft输入
 uint32_t FFT_out[512];     // fft输出
 uint32_t FFT_out_mag[512]; // fft振幅
 uint32_t max_f = 0, max_mag = 0, min_mag = 0; //最大振幅和相应频率和最小振幅
+static uint32_t sampling_rate = 10000;
 
 uint8_t str[40] = "55";
 uint32_t sampling_rate_list[3] = { 1000, 5000, 10000 };
@@ -62,6 +63,23 @@ void dsp_asm_powerMag(int32_t* IBUFOUT) //求谐波幅值
                                          //之所以先除以32768后乘以65536是为了符合浮点数的计算规律
     FFT_out_mag[0] = FFT_out_mag[0] / 2; //这个是直流分量，不需要乘以2
 }
+//uint16_t tim3period[3] = { 999, 199, 99 };
+void SelectDW(){
+	switch(choice){
+		case 1:
+			 htim3.Instance->ARR = 199;
+			 break;
+		case 0:
+			htim3.Instance->ARR = 999;
+			break;
+		case 2:
+			htim3.Instance->ARR = 99;
+			break;
+		default:
+			htim3.Instance->ARR = 99;
+			break;
+	}
+}
 
 /**
  *
@@ -73,7 +91,7 @@ void CalcFFT(float* max_f_r, float* vpp, float* duty_cycle) {
     (*vpp) = 0;
     (*duty_cycle) = 0;
 
-    static uint32_t sampling_rate = 10000;
+    
     uint32_t mid_mag = 0, duty_point = 0;         //电压中间值，高于间值的点数
     ; //真实的频率,峰峰值，占空比
 /*************************FFT********************************/
@@ -118,7 +136,16 @@ void CalcFFT(float* max_f_r, float* vpp, float* duty_cycle) {
     }
     (*duty_cycle) = (float)((duty_point / 1024.0) * 100); //计算占空比
 /*************************计算实际频率*******************************/
-    (*max_f_r) = (float)max_f * sampling_rate / 1024; //计算实际频率
+    switch(choice){
+			case 2:
+				(*max_f_r) = (float)max_f * sampling_rate / 1024; //计算实际频率
+				break;
+			case 1:
+				(*max_f_r) = (float)max_f * sampling_rate / 512; //计算实际频率
+				break;
+			case 0:
+				(*max_f_r) = (float)max_f * sampling_rate / 102.4; //计算实际频率
+				break;}
 /********************************输出**(vpp峰峰值，max_f_r频率，duty_cycle占空比)(ADCvalues:ADC采样值)***********************/
 
     /******************************调档*****************************/
@@ -142,15 +169,18 @@ void CalcFFT(float* max_f_r, float* vpp, float* duty_cycle) {
         else
         {
             times = 0;
-            sampling_rate = sampling_rate_list[choice];
-            htim3.Instance->ARR = tim3period[choice];
-            showFlag = 1;
+            //sampling_rate = sampling_rate_list[choice];
+            //htim3.Instance->ARR = tim3period[choice];
+						SelectDW();
+            showFlag = 1;	
         } //改档
     }
     else {
         choice = uiDtc.dw - 1;
-        sampling_rate = sampling_rate_list[choice];
-        htim3.Instance->ARR = tim3period[choice];
+        //sampling_rate = (unsigned int)sampling_rate_list[choice];
+        //htim3.Instance->ARR = (unsigned int)tim3period[choice];
+				SelectDW();
+				showFlag = 1;times=5;
     }
     /****************************************************************/
 }
