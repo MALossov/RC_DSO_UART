@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:36
- * @LastEditTime: 2022-04-04 22:41:31
+ * @LastEditTime: 2022-04-05 13:35:12
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -29,4 +29,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim);
 void SendTxtData(float max_f_r, float vpp, float duty_cycle, uint8_t choice);
 uint8_t	get_maxandmin(uint32_t* max_mag, uint32_t* min_mag);
+float getduty(uint32_t mid_mag);
+uint32_t getavg(uint32_t* a, uint16_t longth);
+
 #endif // !GLOBAL_IT_H

@@ -12,8 +12,8 @@
 
 
 //出现警告,需要下中数据填上括号,字体不好看
-const unsigned char F6x8[][6]={};
-/*
+//const unsigned char F6x8[][6]={};
+
 const unsigned char F6x8[][6] =
 {
 
@@ -115,7 +115,6 @@ const unsigned char F6x8[][6] =
 
 };
 
-*/
 /****************************************8*16的点阵************************************/
 const unsigned char F8X16[]=
 {

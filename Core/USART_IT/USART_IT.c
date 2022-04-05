@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-04-03 14:32:15
- * @LastEditTime: 2022-04-04 22:48:07
+ * @LastEditTime: 2022-04-05 14:44:49
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -15,13 +15,14 @@ extern uint8_t* rxPtr;
 extern uint8_t aRxBuffer[2];
 extern uint8_t rxFlg;
 extern uint8_t rxStr[50];
-uint8_t* tmpCMDCmpr[50];
+uint8_t tmpCMDCmpr[50];
 extern uint8_t sendFlag;
 uint8_t stopADC;
 uint8_t dctlName[5];    //操作所选项目的名称
 uint8_t dctlOpt;    //对于所选项目的操作
 
 extern uint32_t ADC_Values[1024];
+extern uint32_t min_mag;
 
 //字符串发送相关函数
 extern uint8_t uartWavStr[1000];
@@ -73,7 +74,7 @@ void Init_DataCTL() {
     uiDtc.dw = AUTO;
     uiDtc.fd = 1;
     uiDtc.sz = 1;
-    uiDtc.py = 75;
+    uiDtc.py = 0;
     uiDtc.sj.choice = 2;
     uiDtc.sj.cy = DEFALULT;
     uiDtc.xs = DC;
@@ -85,7 +86,7 @@ void SendWav() {
         tmpRnd = uiDtc.sz;
         for (int i = 0;i < 400 / tmpRnd + 1;i++) {
             for (int j = 0;j < uiDtc.sz;j++) {
-                uartWavCache[i * tmpRnd + j] = (uint8_t)((((ADC_Values[i] >> 6) << uiDtc.fd) + uiDtc.py - 75));
+                uartWavCache[i * tmpRnd + j] = (uint8_t)(((((ADC_Values[i] >> 6) - (min_mag >> 6)) << uiDtc.fd) + uiDtc.py));
             }
         }
 
@@ -100,14 +101,14 @@ void SendWav() {
 
         for (int i = 0;i < 400 / uiDtc.sz + 1;i++) {
             for (int j = 0;j < uiDtc.sz;j++) {
-                printf("add 1,0,%d\xff\xff\xff", (uint8_t)((((ADC_Values[i] >> 6) << uiDtc.fd) + uiDtc.py - 75)));
+                printf("add 1,0,%d\xff\xff\xff", (uint8_t)(((((ADC_Values[i] >> 6) - (min_mag >> 6)) << uiDtc.fd) + uiDtc.py)));
             }
         }
     }
 }
 
 void ChkStr2DTC() {
-    if (strcmp(rxStr, tmpCMDCmpr) == 0)
+    if (rxStr[0] == tmpCMDCmpr[0])
         return;
 
     //sscanf(rxStr, "%s\x2D%c", dctlName, &dctlOpt);    //以-分隔字符串
@@ -152,7 +153,7 @@ void ChkStr2DTC() {
     default:
         break;
     }
-    strcpy(tmpCMDCmpr, rxStr);
+    tmpCMDCmpr[0] = rxStr[0];
 }
 
 void SendTable(float duty) {
