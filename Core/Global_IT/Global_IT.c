@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-03-25 23:12:52
- * @LastEditTime: 2022-04-05 13:45:35
+ * @LastEditTime: 2022-04-13 22:19:55
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -26,7 +26,7 @@ uint16_t freqVal;    //TIM5频率调节
 
 extern uint8_t rxStr[50];
 
-static uint8_t choice = 2, times = 0;
+static uint16_t choice = 2, times = 0;
 
 extern DataCTL uiDtc;
 
@@ -80,7 +80,6 @@ void SelectDW() {
         htim3.Instance->ARR = 99;
         break;
     default:
-        htim3.Instance->ARR = 99;
         break;
     }
 }
@@ -105,7 +104,7 @@ void CalcFFT(float* max_f_r, float* vpp, float* duty_cycle) {
     }                                          //转化
     cr4_fft_1024_stm32(FFT_out, FFT_in, 1024); // fft
     dsp_asm_powerMag(FFT_out);                 //求幅值
-		max_mag=0;max_f=0;
+    max_mag = 0;max_f = 0;
     for (int i = 0; i < 512; i++)              //造出最大的振幅和相应序号
     {
         if (max_mag < FFT_out_mag[i] && i != 0)
@@ -142,20 +141,21 @@ void CalcFFT(float* max_f_r, float* vpp, float* duty_cycle) {
     // (*duty_cycle) = (float)((duty_point / 1024.0) * 100); //计算占空比
     (*duty_cycle) = getduty((max_mag + min_mag) / 2);
     /*************************计算实际频率*******************************/
-    switch (choice) {
-    case 2:
-        (*max_f_r) = (float)max_f * sampling_rate / 1024; //计算实际频率
-        break;
-    case 1:
-        (*max_f_r) = (float)max_f * sampling_rate / 512; //计算实际频率
-        break;
-    case 0:
-        (*max_f_r) = (float)max_f * sampling_rate / 102.4; //计算实际频率
-        break;
-    }
-    /********************************输出**(vpp峰峰值，max_f_r频率，duty_cycle占空比)(ADCvalues:ADC采样值)***********************/
+//    switch (choice) {
+//    case 2:
+//        (*max_f_r) = (float)max_f * sampling_rate / 1024; //计算实际频率
+//        break;
+//    case 1:
+//        (*max_f_r) = (float)max_f * sampling_rate / 512; //计算实际频率
+//        break;
+//    case 0:
+//        (*max_f_r) = (float)max_f * sampling_rate / 102.4; //计算实际频率
+//        break;
+//    }
+    (*max_f_r) = (float)max_f * sampling_rate / 1024; //计算实际频率
+       /********************************输出**(vpp峰峰值，max_f_r频率，duty_cycle占空比)(ADCvalues:ADC采样值)***********************/
 
-        /******************************调档*****************************/
+           /******************************调档*****************************/
     if (uiDtc.dw == AUTO) {
         if ((*max_f_r) > 700)
             choice = 2;
@@ -176,7 +176,7 @@ void CalcFFT(float* max_f_r, float* vpp, float* duty_cycle) {
         else
         {
             times = 0;
-            //sampling_rate = sampling_rate_list[choice];
+            sampling_rate = sampling_rate_list[choice];
             //htim3.Instance->ARR = tim3period[choice];
             SelectDW();
             showFlag = 1;
@@ -184,7 +184,7 @@ void CalcFFT(float* max_f_r, float* vpp, float* duty_cycle) {
     }
     else {
         choice = uiDtc.dw - 1;
-        //sampling_rate = (unsigned int)sampling_rate_list[choice];
+        sampling_rate = (unsigned int)sampling_rate_list[choice];
         //htim3.Instance->ARR = (unsigned int)tim3period[choice];
         SelectDW();
         showFlag = 1;times = 5;
@@ -208,7 +208,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     //进行一波串口的DMA转换和发送
     if (showFlag) {
         //sprintf(str, "Vpp=%.4fV,Vma=%.4fV,Vmi=%.4fV", vpp, max_mag * 3.3 / 4096, min_mag * 3.3 / 4096);
-        sprintf(str, "Vpp=%.4fV,f=%.1fHZ,d:%.1f\x25[%.4f,%.4f]", vpp, max_f_r, duty_cycle, max_mag * 3.3 / 4096, min_mag * 3.3 / 4096);//实际电压和频率
+        sprintf(str, "Vpp=%.4fV,f=%.1fHZ,d:%.1f\x25[%.2f,%.2f],DW:%2d,XS:%d", vpp, max_f_r, duty_cycle, max_mag * 3.3 / 4096, min_mag * 3.3 / 4096, uiDtc.dw, uiDtc.xs);//实际电压和频率
         OLED_ShowString(0, 0, str, 16);
         SendTxtData(max_f_r, vpp, duty_cycle, choice);
         if (uiDtc.sj.choice == 2) {
@@ -229,7 +229,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
     if (htim->Instance == TIM4) {
-        if (pwmVal < 2000 && downFlg == 0) {
+        if (pwmVal < 3800 && downFlg == 0) {
             pwmVal++;
             __HAL_TIM_SET_COMPARE(&htim4, TIM_CHANNEL_1, pwmVal);
         }
@@ -238,7 +238,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
             __HAL_TIM_SetCompare(&htim4, TIM_CHANNEL_1, pwmVal);
         }
 
-        if (pwmVal == 2000) {
+        if (pwmVal == 3800) {
             downFlg = 1;
         }
         else if (pwmVal == 0) {
@@ -287,8 +287,8 @@ void SendTxtData(float max_f_r, float vpp, float duty_cycle, uint8_t choice) {  
     sprintf(strSplRt, "t14.txt=\"%d\"\xff\xff\xff", sampling_rate_list[choice]);
     sprintf(strDuty, "t13.txt=\"%.3f\"\xff\xff\xff", duty_cycle);
     sprintf(strVpp, "t15.txt=\"%.3f\"\xff\xff\xff", vpp);
-	for(int i = 0;i<8;i++)
-    printf("%s%s%s%s", strHZ, strSplRt, strDuty, strVpp);
+    for (int i = 0;i < 8;i++)
+        printf("%s%s%s%s", strHZ, strSplRt, strDuty, strVpp);
 }
 
 #define numformags 10
@@ -297,6 +297,7 @@ uint8_t	get_maxandmin(uint32_t* max_mag, uint32_t* min_mag)
     static uint32_t max_mags[numformags] = { 0 }, min_mags[numformags] = { 0 };//储存numformags次电压极值的值
     static uint8_t index = 0, showflag = 0;//index读取到第几次；showfag返回值用来标注是否读满
     //static uint32_t max_in_mags = 0, min_in_mags = 0;//几个极值中的极值
+
     max_mags[index] = min_mags[index] = ADC_Values[0];
     for (int i = 0;i < 1024;i++)
     {

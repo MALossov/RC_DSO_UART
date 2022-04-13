@@ -2,7 +2,7 @@
  * @Description:
  * @Author: MALossov
  * @Date: 2022-04-03 14:32:15
- * @LastEditTime: 2022-04-05 14:59:07
+ * @LastEditTime: 2022-04-13 21:30:08
  * @LastEditors: MALossov
  * @Reference:
  */
@@ -32,6 +32,8 @@ extern uint8_t sinTableLX[384];
 
 extern DataCTL uiDtc;
 
+#define dctlOpt rxStr[3]
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
     HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_SET);
@@ -51,7 +53,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
         //sendFlag = 1;
         OLED_Clear();
         ChkStr2DTC();
-        OLED_ShowString(0, 6, rxStr, 16);
+        OLED_ShowString(64, 6, rxStr, 16);
         rxPtr = rxStr;
     }
     else if (rxFlg && *aRxBuffer != '#' && *aRxBuffer != '$') {
@@ -60,7 +62,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
     }
 
 
-    if (*huart1.pRxBuffPtr == 0x00) {
+    if (*huart2.pRxBuffPtr == 0x00) {
         HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
         stopADC = 0;
         //ChkStr2DTC();
@@ -108,7 +110,7 @@ void SendWav() {
 }
 
 void ChkStr2DTC() {
-    if (rxStr[0] == tmpCMDCmpr[0])
+    if (rxStr[0] == tmpCMDCmpr[0] && rxStr[3] == tmpCMDCmpr[3])
         return;
 
     //sscanf(rxStr, "%s\x2D%c", dctlName, &dctlOpt);    //以-分隔字符串
@@ -123,10 +125,9 @@ void ChkStr2DTC() {
 
     dctlName[0] = rxStr[0];
     dctlName[1] = rxStr[1];
-    dctlOpt = rxStr[3];
 
 
-    switch (*dctlName) {
+    switch (dctlName[0]) {
     case 'H':   //滑块，偏移量
         uiDtc.py = dctlOpt;
         break;
@@ -157,6 +158,7 @@ void ChkStr2DTC() {
         break;
     }
     tmpCMDCmpr[0] = rxStr[0];
+    tmpCMDCmpr[3] = rxStr[3];
 }
 
 void SendTable(float duty) {
@@ -203,13 +205,13 @@ void SendTable(float duty) {
 }
 
 void GetUARTReceiveITWork() {
-    if (HAL_UART_Receive_IT(&huart1, aRxBuffer, 1) != HAL_OK)
+    if (HAL_UART_Receive_IT(&huart2, aRxBuffer, 1) != HAL_OK)
     {
         do {
-            if (huart1.gState == HAL_UART_STATE_BUSY_TX)
+            if (huart2.gState == HAL_UART_STATE_BUSY_TX)
             {
                 continue;
             }
-        } while (HAL_UART_Receive_IT(&huart1, aRxBuffer, 1) != HAL_BUSY);
+        } while (HAL_UART_Receive_IT(&huart2, aRxBuffer, 1) != HAL_BUSY);
     }
 }
